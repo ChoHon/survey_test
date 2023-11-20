@@ -2,10 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Form {
+type Option {
   id: Int!
-  name: String!
-  description: String!
+  content: String!
+  score: Int!
+  option_number: Int!
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -15,15 +16,47 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Question {
+  id: Int!
+  content: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Form {
+  id: Int!
+  name: String!
+  description: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+type Answer {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   findAllForm: [Form!]!
   findOneFormById(id: Int!): Form!
+  question(id: Int!): Question!
+  option(id: Int!): Option!
+  answer(id: Int!): Answer!
 }
 
 type Mutation {
   createForm(input: CreateFormInput!): Form!
   updateForm(input: UpdateFormInput!): Form!
   removeForm(id: Int!): Boolean!
+  createQuestion(createQuestionInput: CreateQuestionInput!): Question!
+  updateQuestion(updateQuestionInput: UpdateQuestionInput!): Question!
+  removeQuestion(id: Int!): Question!
+  createOption(createOptionInput: CreateOptionInput!): Option!
+  updateOption(updateOptionInput: UpdateOptionInput!): Option!
+  removeOption(id: Int!): Option!
+  createAnswer(createAnswerInput: CreateAnswerInput!): Answer!
+  updateAnswer(updateAnswerInput: UpdateAnswerInput!): Answer!
+  removeAnswer(id: Int!): Answer!
 }
 
 input CreateFormInput {
@@ -34,5 +67,38 @@ input CreateFormInput {
 input UpdateFormInput {
   name: String
   description: String
+  id: Int!
+}
+
+input CreateQuestionInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateQuestionInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateOptionInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateOptionInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateAnswerInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateAnswerInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
 }

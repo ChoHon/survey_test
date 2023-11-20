@@ -1,8 +1,10 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { QuestionToForm } from 'src/question/entities/question-form.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -21,10 +23,7 @@ export class Form {
   @Field(() => String)
   name: string;
 
-  @Column({
-    type: 'text',
-    default: '',
-  })
+  @Column({ type: 'text', default: '' })
   @Field(() => String)
   description: string;
 
@@ -35,4 +34,7 @@ export class Form {
   @UpdateDateColumn()
   @Field(() => Date)
   updated_at: Date;
+
+  @OneToMany(() => QuestionToForm, (qtf) => qtf.form)
+  questionToForm: QuestionToForm;
 }
