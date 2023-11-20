@@ -15,6 +15,9 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { FormModule } from './form/form.module';
+import { QuestionModule } from './question/question.module';
+import { OptionModule } from './option/option.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
@@ -50,6 +53,9 @@ export class LoggerMiddleware implements NestMiddleware {
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     FormModule,
+    QuestionModule,
+    OptionModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
