@@ -16,14 +16,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  findAll: [Form!]!
-  findOne(id: Int!): Form!
+  findAllForm: [Form!]!
+  findOneFormById(id: Int!): Form!
 }
 
 type Mutation {
   createForm(input: CreateFormInput!): Form!
   updateForm(input: UpdateFormInput!): Form!
-  removeForm(id: Int!): String!
+  removeForm(id: Int!): Boolean!
 }
 
 input CreateFormInput {

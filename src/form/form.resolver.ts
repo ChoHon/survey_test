@@ -8,31 +8,28 @@ import { UpdateFormInput } from './dto/update-form.input';
 export class FormResolver {
   constructor(private readonly formService: FormService) {}
 
-  @Mutation(() => Form)
+  @Mutation(() => Form, { name: 'createForm' })
   createForm(@Args('input') input: CreateFormInput) {
     return this.formService.create(input);
   }
 
-  @Query(() => [Form])
+  @Query(() => [Form], { name: 'findAllForm' })
   findAll() {
     return this.formService.findAll();
   }
 
-  @Query(() => Form)
+  @Query(() => Form, { name: 'findOneFormById' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.formService.findOne(id);
   }
 
-  @Mutation(() => Form)
+  @Mutation(() => Form, { name: 'updateForm' })
   updateForm(@Args('input') input: UpdateFormInput) {
     return this.formService.update(input.id, input);
   }
 
-  @Mutation(() => String)
-  async removeForm(
-    @Args('id', { type: () => Int }) id: number,
-  ): Promise<string> {
-    const result = await this.formService.remove(id);
-    return result ? 'Success' : 'Fail';
+  @Mutation(() => Boolean, { name: 'removeForm' })
+  removeForm(@Args('id', { type: () => Int }) id: number) {
+    return this.formService.remove(id);
   }
 }
