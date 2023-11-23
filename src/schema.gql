@@ -2,11 +2,9 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Option {
+type Question {
   id: Int!
   content: String!
-  score: Int!
-  option_number: Int!
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -16,11 +14,20 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Question {
+type Option {
   id: Int!
   content: String!
+  score: Int!
+  option_number: Int!
   created_at: DateTime!
   updated_at: DateTime!
+}
+
+type Answer {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  total_score: Int!
 }
 
 type Form {
@@ -31,15 +38,11 @@ type Form {
   updated_at: DateTime!
 }
 
-type Answer {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 type Query {
   findAllForm: [Form!]!
-  findOneFormById(id: Int!): Form!
-  question(id: Int!): Question!
+  findOneForm(id: Int!): Form!
+  findAllQuestion: [Question!]!
+  findOneQuestion(id: Int!): Question!
   option(id: Int!): Option!
   answer(id: Int!): Answer!
 }
@@ -48,9 +51,9 @@ type Mutation {
   createForm(input: CreateFormInput!): Form!
   updateForm(input: UpdateFormInput!): Form!
   removeForm(id: Int!): Boolean!
-  createQuestion(createQuestionInput: CreateQuestionInput!): Question!
-  updateQuestion(updateQuestionInput: UpdateQuestionInput!): Question!
-  removeQuestion(id: Int!): Question!
+  createQuestion(input: CreateQuestionInput!): Question!
+  updateQuestion(input: UpdateQuestionInput!): Question!
+  removeQuestion(id: Int!): Boolean!
   createOption(createOptionInput: CreateOptionInput!): Option!
   updateOption(updateOptionInput: UpdateOptionInput!): Option!
   removeOption(id: Int!): Option!
@@ -71,13 +74,11 @@ input UpdateFormInput {
 }
 
 input CreateQuestionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  content: String!
 }
 
 input UpdateQuestionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  content: String
   id: Int!
 }
 

@@ -18,7 +18,7 @@ export class FormResolver {
     return this.formService.findAll();
   }
 
-  @Query(() => Form, { name: 'findOneFormById' })
+  @Query(() => Form, { name: 'findOneForm' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.formService.findOne(id);
   }

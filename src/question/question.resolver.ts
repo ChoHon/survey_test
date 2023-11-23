@@ -8,27 +8,27 @@ import { UpdateQuestionInput } from './dto/update-question.input';
 export class QuestionResolver {
   constructor(private readonly questionService: QuestionService) {}
 
-  @Mutation(() => Question)
-  createQuestion(@Args('createQuestionInput') createQuestionInput: CreateQuestionInput) {
-    return this.questionService.create(createQuestionInput);
+  @Mutation(() => Question, { name: 'createQuestion' })
+  createQuestion(@Args('input') input: CreateQuestionInput) {
+    return this.questionService.create(input);
   }
 
-  @Query(() => [Question], { name: 'question' })
+  @Query(() => [Question], { name: 'findAllQuestion' })
   findAll() {
     return this.questionService.findAll();
   }
 
-  @Query(() => Question, { name: 'question' })
+  @Query(() => Question, { name: 'findOneQuestion' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.questionService.findOne(id);
   }
 
-  @Mutation(() => Question)
-  updateQuestion(@Args('updateQuestionInput') updateQuestionInput: UpdateQuestionInput) {
-    return this.questionService.update(updateQuestionInput.id, updateQuestionInput);
+  @Mutation(() => Question, { name: 'updateQuestion' })
+  updateQuestion(@Args('input') input: UpdateQuestionInput) {
+    return this.questionService.update(input.id, input);
   }
 
-  @Mutation(() => Question)
+  @Mutation(() => Boolean, { name: 'removeQuestion' })
   removeQuestion(@Args('id', { type: () => Int }) id: number) {
     return this.questionService.remove(id);
   }
