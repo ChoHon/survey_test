@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { QuestionToForm } from 'src/question/entities/question-form.entity';
+import { Answer } from 'src/answer/entities/answer.entity';
+import { QuestionInForm } from 'src/question/entities/question-form.entity';
 import {
   Column,
   CreateDateColumn,
@@ -35,6 +36,9 @@ export class Form {
   @Field(() => Date)
   updated_at: Date;
 
-  @OneToMany(() => QuestionToForm, (qtf) => qtf.form)
-  questionToForm: QuestionToForm;
+  @OneToMany(() => QuestionInForm, (qtf) => qtf.form)
+  qf: QuestionInForm[];
+
+  @OneToMany(() => Answer, (answer) => answer.form)
+  answer: Answer[];
 }

@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Choice } from 'src/answer/entities/choice.entity';
 import { Question } from 'src/question/entities/question.entity';
 import {
   Column,
@@ -53,4 +54,7 @@ export class Option {
   @UpdateDateColumn()
   @Field(() => Date)
   updated_at: Date;
+
+  @OneToMany(() => Choice, (choice) => choice.option)
+  choice: Choice[];
 }

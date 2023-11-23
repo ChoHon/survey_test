@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { QuestionToForm } from './question-form.entity';
+import { QuestionInForm as QuestionInForm } from './question-form.entity';
 
 @Entity()
 @ObjectType()
@@ -33,6 +33,6 @@ export class Question {
   @ManyToOne(() => OptionGroup, (group) => group.questions)
   options: OptionGroup;
 
-  @OneToMany(() => QuestionToForm, (qtf) => qtf.question)
-  questionToForm: QuestionToForm;
+  @OneToMany(() => QuestionInForm, (qf) => qf.question)
+  qf: QuestionInForm[];
 }
