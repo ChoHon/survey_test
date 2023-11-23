@@ -4,9 +4,9 @@
 
 type Question {
   id: Int!
-  content: String!
   created_at: DateTime!
   updated_at: DateTime!
+  content: String!
 }
 
 """
@@ -23,6 +23,14 @@ type Option {
   updated_at: DateTime!
 }
 
+type Form {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String!
+  description: String!
+}
+
 type Answer {
   id: Int!
   created_at: DateTime!
@@ -30,10 +38,8 @@ type Answer {
   total_score: Int!
 }
 
-type Form {
+type QuestionInForm {
   id: Int!
-  name: String!
-  description: String!
   created_at: DateTime!
   updated_at: DateTime!
 }
@@ -51,6 +57,8 @@ type Mutation {
   createForm(input: CreateFormInput!): Form!
   updateForm(input: UpdateFormInput!): Form!
   removeForm(id: Int!): Boolean!
+  addQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
+  removeQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
   createQuestion(input: CreateQuestionInput!): Question!
   updateQuestion(input: UpdateQuestionInput!): Question!
   removeQuestion(id: Int!): Boolean!
@@ -64,13 +72,13 @@ type Mutation {
 
 input CreateFormInput {
   name: String!
-  description: String
+  description: String!
 }
 
 input UpdateFormInput {
+  id: Int
   name: String
   description: String
-  id: Int!
 }
 
 input CreateQuestionInput {
@@ -78,8 +86,8 @@ input CreateQuestionInput {
 }
 
 input UpdateQuestionInput {
+  id: Int
   content: String
-  id: Int!
 }
 
 input CreateOptionInput {

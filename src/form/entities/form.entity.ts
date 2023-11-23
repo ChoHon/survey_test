@@ -1,26 +1,14 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Answer } from 'src/answer/entities/answer.entity';
+import { Common } from 'src/common/entities/common.entity';
 import { QuestionInForm } from 'src/question/entities/question-form.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
+@InputType({ isAbstract: true })
 @Entity()
 @ObjectType()
-export class Form {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id: number;
-
-  @Column({
-    unique: true,
-    nullable: false,
-  })
+export class Form extends Common {
+  @Column({ unique: true })
   @Field(() => String)
   name: string;
 
@@ -28,15 +16,7 @@ export class Form {
   @Field(() => String)
   description: string;
 
-  @CreateDateColumn()
-  @Field(() => Date)
-  created_at: Date;
-
-  @UpdateDateColumn()
-  @Field(() => Date)
-  updated_at: Date;
-
-  @OneToMany(() => QuestionInForm, (qtf) => qtf.form)
+  @OneToMany(() => QuestionInForm, (qf) => qf.form)
   qf: QuestionInForm[];
 
   @OneToMany(() => Answer, (answer) => answer.form)

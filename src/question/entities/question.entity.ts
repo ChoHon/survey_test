@@ -1,34 +1,16 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, InputType } from '@nestjs/graphql';
+import { Common } from 'src/common/entities/common.entity';
 import { OptionGroup } from 'src/option/entities/option.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { QuestionInForm as QuestionInForm } from './question-form.entity';
 
+@InputType({ isAbstract: true })
 @Entity()
 @ObjectType()
-export class Question {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id: number;
-
+export class Question extends Common {
   @Column()
   @Field(() => String)
   content: string;
-
-  @CreateDateColumn()
-  @Field(() => Date)
-  created_at: Date;
-
-  @UpdateDateColumn()
-  @Field(() => Date)
-  updated_at: Date;
 
   @ManyToOne(() => OptionGroup, (group) => group.questions)
   options: OptionGroup;

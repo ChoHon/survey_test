@@ -1,8 +1,7 @@
-import { CreateFormInput } from './create-form.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { InputType, PartialType, PickType } from '@nestjs/graphql';
+import { Form } from '../entities/form.entity';
 
 @InputType()
-export class UpdateFormInput extends PartialType(CreateFormInput) {
-  @Field(() => Int)
-  id: number;
-}
+export class UpdateFormInput extends PartialType(
+  PickType(Form, ['id', 'name', 'description'] as const),
+) {}

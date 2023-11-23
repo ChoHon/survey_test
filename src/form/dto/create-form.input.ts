@@ -1,10 +1,8 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, PickType } from '@nestjs/graphql';
+import { Form } from '../entities/form.entity';
 
 @InputType()
-export class CreateFormInput {
-  @Field(() => String)
-  name: string;
-
-  @Field(() => String, { nullable: true })
-  description: string;
-}
+export class CreateFormInput extends PickType(Form, [
+  'name',
+  'description',
+] as const) {}

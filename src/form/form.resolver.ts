@@ -3,6 +3,7 @@ import { FormService } from './form.service';
 import { Form } from './entities/form.entity';
 import { CreateFormInput } from './dto/create-form.input';
 import { UpdateFormInput } from './dto/update-form.input';
+import { QuestionInForm } from 'src/question/entities/question-form.entity';
 
 @Resolver(() => Form)
 export class FormResolver {
@@ -31,5 +32,21 @@ export class FormResolver {
   @Mutation(() => Boolean, { name: 'removeForm' })
   removeForm(@Args('id', { type: () => Int }) id: number) {
     return this.formService.remove(id);
+  }
+
+  @Mutation(() => QuestionInForm, { name: 'addQuestionToForm' })
+  addQuestionToForm(
+    @Args('form_id', { type: () => Int }) form_id: number,
+    @Args('question_id', { type: () => Int }) question_id: number,
+  ): Promise<QuestionInForm> {
+    return this.formService.addQuestionToForm(form_id, question_id);
+  }
+
+  @Mutation(() => QuestionInForm, { name: 'removeQuestionToForm' })
+  removeQuestionToForm(
+    @Args('form_id', { type: () => Int }) form_id: number,
+    @Args('question_id', { type: () => Int }) question_id: number,
+  ): Promise<QuestionInForm> {
+    return this.formService.removeQuestionToForm(form_id, question_id);
   }
 }

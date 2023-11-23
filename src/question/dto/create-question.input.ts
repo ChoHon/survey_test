@@ -1,7 +1,7 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, PickType } from '@nestjs/graphql';
+import { Question } from '../entities/question.entity';
 
 @InputType()
-export class CreateQuestionInput {
-  @Field(() => String)
-  content: string;
-}
+export class CreateQuestionInput extends PickType(Question, [
+  'content',
+] as const) {}
