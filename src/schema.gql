@@ -35,6 +35,7 @@ type Answer {
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
+  respondent: String!
   total_score: Int!
 }
 
@@ -55,7 +56,8 @@ type Query {
   findOneQuestion(id: Int!): Question!
   findAllOption: [Option!]!
   findOneOption(id: Int!): Option!
-  answer(id: Int!): Answer!
+  findAllAnswer: [Answer!]!
+  findOneAnswer(id: Int!): Answer!
 }
 
 type Mutation {
@@ -68,9 +70,9 @@ type Mutation {
   createOption(input: CreateOptionInput!): Option!
   updateOption(input: UpdateOptionInput!): Option!
   removeOption(id: Int!): Boolean!
-  createAnswer(createAnswerInput: CreateAnswerInput!): Answer!
-  updateAnswer(updateAnswerInput: UpdateAnswerInput!): Answer!
-  removeAnswer(id: Int!): Answer!
+  createAnswer(input: CreateAnswerInput!): Answer!
+  updateAnswer(input: UpdateAnswerInput!): Answer!
+  removeAnswer(id: Int!): Boolean!
   addQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
   removeQuestionFromForm(form_id: Int!, question_id: Int!): Boolean!
 }
@@ -108,12 +110,10 @@ input UpdateOptionInput {
 }
 
 input CreateAnswerInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  respondent: String!
 }
 
 input UpdateAnswerInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  respondent: String
   id: Int!
 }

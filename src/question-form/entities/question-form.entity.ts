@@ -1,8 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Choice } from 'src/answer/entities/choice.entity';
 import { Common } from 'src/common/entities/common.entity';
 import { Form } from 'src/form/entities/form.entity';
-import { Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, ManyToOne } from 'typeorm';
 import { Question } from '../../question/entities/question.entity';
 
 @Entity()
@@ -15,7 +14,4 @@ export class QuestionInForm extends Common {
   @ManyToOne(() => Form, (form) => form.qf)
   @Field(() => Form)
   form: Form;
-
-  @OneToMany(() => Choice, (choice) => choice.qf)
-  choice: Choice;
 }

@@ -1,7 +1,5 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, PickType } from '@nestjs/graphql';
+import { Answer } from '../entities/answer.entity';
 
 @InputType()
-export class CreateAnswerInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
-}
+export class CreateAnswerInput extends PickType(Answer, ['respondent']) {}
