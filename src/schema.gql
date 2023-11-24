@@ -45,8 +45,15 @@ type Form {
   updated_at: DateTime!
   name: String!
   description: String!
+  status: FormStatus!
   qf: [QuestionInForm!]!
   answer: [Answer!]!
+}
+
+enum FormStatus {
+  STANDBY
+  ONGOING
+  COMPLETE
 }
 
 type Query {
