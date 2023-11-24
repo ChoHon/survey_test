@@ -17,8 +17,10 @@ export class Form extends Common {
   description: string;
 
   @OneToMany(() => QuestionInForm, (qf) => qf.form)
+  @Field(() => [QuestionInForm])
   qf: QuestionInForm[];
 
   @OneToMany(() => Answer, (answer) => answer.form)
+  @Field(() => [Answer])
   answer: Answer[];
 }

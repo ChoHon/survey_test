@@ -1,7 +1,7 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Common } from 'src/common/entities/common.entity';
-import { OptionGroup } from 'src/option/entities/option.entity';
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Option } from 'src/option/entities/option.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { QuestionInForm as QuestionInForm } from '../../question-form/entities/question-form.entity';
 
 @InputType({ isAbstract: true })
@@ -12,8 +12,9 @@ export class Question extends Common {
   @Field(() => String)
   content: string;
 
-  @ManyToOne(() => OptionGroup, (group) => group.questions)
-  options: OptionGroup;
+  @OneToMany(() => Option, (option) => option.question)
+  @Field(() => [Option])
+  options: Option[];
 
   @OneToMany(() => QuestionInForm, (qf) => qf.question)
   qf: QuestionInForm[];

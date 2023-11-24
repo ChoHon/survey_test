@@ -45,11 +45,11 @@ export class QuestionFormService {
   async removeQuestionFromForm(
     form_id: number,
     question_id: number,
-  ): Promise<QuestionInForm> {
+  ): Promise<number> {
     const target = await this.findOne(form_id, question_id);
 
-    await this.qfRepo.delete(target.id);
+    const result = await this.qfRepo.delete(target.id);
 
-    return target;
+    return result.affected;
   }
 }

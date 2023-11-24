@@ -8,27 +8,27 @@ import { UpdateOptionInput } from './dto/update-option.input';
 export class OptionResolver {
   constructor(private readonly optionService: OptionService) {}
 
-  @Mutation(() => Option)
-  createOption(@Args('createOptionInput') createOptionInput: CreateOptionInput) {
-    return this.optionService.create(createOptionInput);
+  @Mutation(() => Option, { name: 'createOption' })
+  createOption(@Args('input') input: CreateOptionInput) {
+    return this.optionService.create(input);
   }
 
-  @Query(() => [Option], { name: 'option' })
+  @Query(() => [Option], { name: 'findAllOption' })
   findAll() {
     return this.optionService.findAll();
   }
 
-  @Query(() => Option, { name: 'option' })
+  @Query(() => Option, { name: 'findOneOption' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.optionService.findOne(id);
   }
 
-  @Mutation(() => Option)
-  updateOption(@Args('updateOptionInput') updateOptionInput: UpdateOptionInput) {
-    return this.optionService.update(updateOptionInput.id, updateOptionInput);
+  @Mutation(() => Option, { name: 'updateOption' })
+  updateOption(@Args('input') input: UpdateOptionInput) {
+    return this.optionService.update(input.id, input);
   }
 
-  @Mutation(() => Option)
+  @Mutation(() => Boolean, { name: 'removeOption' })
   removeOption(@Args('id', { type: () => Int }) id: number) {
     return this.optionService.remove(id);
   }

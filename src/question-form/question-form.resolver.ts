@@ -10,15 +10,15 @@ export class QuestionFormResolver {
   addQuestionToForm(
     @Args('form_id', { type: () => Int }) form_id: number,
     @Args('question_id', { type: () => Int }) question_id: number,
-  ): Promise<QuestionInForm> {
+  ) {
     return this.qfService.addQuestionToForm(form_id, question_id);
   }
 
-  @Mutation(() => QuestionInForm, { name: 'removeQuestionFromForm' })
+  @Mutation(() => Boolean, { name: 'removeQuestionFromForm' })
   removeQuestionFromForm(
     @Args('form_id', { type: () => Int }) form_id: number,
     @Args('question_id', { type: () => Int }) question_id: number,
-  ): Promise<QuestionInForm> {
+  ) {
     return this.qfService.removeQuestionFromForm(form_id, question_id);
   }
 }

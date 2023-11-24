@@ -6,6 +6,8 @@ type QuestionInForm {
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
+  question: Question!
+  form: Form!
 }
 
 """
@@ -18,15 +20,15 @@ type Question {
   created_at: DateTime!
   updated_at: DateTime!
   content: String!
+  options: [Option!]!
 }
 
 type Option {
   id: Int!
-  content: String!
-  score: Int!
-  option_number: Int!
   created_at: DateTime!
   updated_at: DateTime!
+  content: String!
+  score: Int!
 }
 
 type Answer {
@@ -42,6 +44,8 @@ type Form {
   updated_at: DateTime!
   name: String!
   description: String!
+  qf: [QuestionInForm!]!
+  answer: [Answer!]!
 }
 
 type Query {
@@ -49,7 +53,8 @@ type Query {
   findOneForm(id: Int!): Form!
   findAllQuestion: [Question!]!
   findOneQuestion(id: Int!): Question!
-  option(id: Int!): Option!
+  findAllOption: [Option!]!
+  findOneOption(id: Int!): Option!
   answer(id: Int!): Answer!
 }
 
@@ -60,14 +65,14 @@ type Mutation {
   createQuestion(input: CreateQuestionInput!): Question!
   updateQuestion(input: UpdateQuestionInput!): Question!
   removeQuestion(id: Int!): Boolean!
-  createOption(createOptionInput: CreateOptionInput!): Option!
-  updateOption(updateOptionInput: UpdateOptionInput!): Option!
-  removeOption(id: Int!): Option!
+  createOption(input: CreateOptionInput!): Option!
+  updateOption(input: UpdateOptionInput!): Option!
+  removeOption(id: Int!): Boolean!
   createAnswer(createAnswerInput: CreateAnswerInput!): Answer!
   updateAnswer(updateAnswerInput: UpdateAnswerInput!): Answer!
   removeAnswer(id: Int!): Answer!
   addQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
-  removeQuestionFromForm(form_id: Int!, question_id: Int!): QuestionInForm!
+  removeQuestionFromForm(form_id: Int!, question_id: Int!): Boolean!
 }
 
 input CreateFormInput {
@@ -91,13 +96,14 @@ input UpdateQuestionInput {
 }
 
 input CreateOptionInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  content: String!
+  score: Int!
+  question_id: Int!
 }
 
 input UpdateOptionInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  content: String
+  score: Int
   id: Int!
 }
 

@@ -1,38 +1,14 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, InputType } from '@nestjs/graphql';
 import { Choice } from 'src/answer/entities/choice.entity';
+import { Common } from 'src/common/entities/common.entity';
 import { Question } from 'src/question/entities/question.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
+@InputType({ isAbstract: true })
 @Entity()
 @ObjectType()
-export class OptionGroup {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id: number;
-
-  @OneToMany(() => Option, (option) => option.group)
-  options: Option[];
-
-  @OneToMany(() => Question, (question) => question.options)
-  questions: Question[];
-}
-
-@Entity()
-@ObjectType()
-export class Option {
-  @PrimaryGeneratedColumn()
-  @Field(() => Int)
-  id: number;
-
-  @Column({ nullable: false })
+export class Option extends Common {
+  @Column()
   @Field(() => String)
   content: string;
 
@@ -40,20 +16,8 @@ export class Option {
   @Field(() => Int)
   score: number;
 
-  @Column()
-  @Field(() => Int)
-  option_number: number;
-
-  @ManyToOne(() => OptionGroup, (group) => group.options)
-  group: OptionGroup;
-
-  @CreateDateColumn()
-  @Field(() => Date)
-  created_at: Date;
-
-  @UpdateDateColumn()
-  @Field(() => Date)
-  updated_at: Date;
+  @ManyToOne(() => Question, (question) => question.options)
+  question: Question;
 
   @OneToMany(() => Choice, (choice) => choice.option)
   choice: Choice[];

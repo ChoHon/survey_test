@@ -23,10 +23,7 @@ export class FormService {
   }
 
   async findOne(id: number): Promise<Form> {
-    return this.formRepo.findOne({
-      relations: { qf: true },
-      where: { id },
-    });
+    return this.formRepo.findOne({ where: { id } });
   }
 
   async update(id: number, input: UpdateFormInput): Promise<Form> {
