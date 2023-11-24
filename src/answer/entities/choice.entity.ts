@@ -1,5 +1,5 @@
 import { Option } from 'src/option/entities/option.entity';
-import { QuestionInForm } from 'src/question/entities/question-form.entity';
+import { QuestionInForm } from 'src/question-form/entities/question-form.entity';
 import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Answer } from './answer.entity';
 

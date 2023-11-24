@@ -2,17 +2,23 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Question {
+type QuestionInForm {
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
-  content: String!
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type Question {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  content: String!
+}
 
 type Option {
   id: Int!
@@ -23,14 +29,6 @@ type Option {
   updated_at: DateTime!
 }
 
-type Form {
-  id: Int!
-  created_at: DateTime!
-  updated_at: DateTime!
-  name: String!
-  description: String!
-}
-
 type Answer {
   id: Int!
   created_at: DateTime!
@@ -38,10 +36,12 @@ type Answer {
   total_score: Int!
 }
 
-type QuestionInForm {
+type Form {
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
+  name: String!
+  description: String!
 }
 
 type Query {
@@ -57,8 +57,6 @@ type Mutation {
   createForm(input: CreateFormInput!): Form!
   updateForm(input: UpdateFormInput!): Form!
   removeForm(id: Int!): Boolean!
-  addQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
-  removeQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
   createQuestion(input: CreateQuestionInput!): Question!
   updateQuestion(input: UpdateQuestionInput!): Question!
   removeQuestion(id: Int!): Boolean!
@@ -68,6 +66,8 @@ type Mutation {
   createAnswer(createAnswerInput: CreateAnswerInput!): Answer!
   updateAnswer(updateAnswerInput: UpdateAnswerInput!): Answer!
   removeAnswer(id: Int!): Answer!
+  addQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
+  removeQuestionFromForm(form_id: Int!, question_id: Int!): QuestionInForm!
 }
 
 input CreateFormInput {

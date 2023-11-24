@@ -1,7 +1,7 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { Answer } from 'src/answer/entities/answer.entity';
 import { Common } from 'src/common/entities/common.entity';
-import { QuestionInForm } from 'src/question/entities/question-form.entity';
+import { QuestionInForm } from 'src/question-form/entities/question-form.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 
 @InputType({ isAbstract: true })
