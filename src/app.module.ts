@@ -11,6 +11,7 @@ import { QuestionModule } from './question/question.module';
 import { OptionModule } from './option/option.module';
 import { QuestionFormModule } from './question-form/question-form.module';
 import { ChoiceModule } from './choice/choice.module';
+import { AnswerModule } from './answer/answer.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ChoiceModule } from './choice/choice.module';
     QuestionFormModule,
     OptionModule,
     ChoiceModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
