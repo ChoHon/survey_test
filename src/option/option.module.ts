@@ -3,11 +3,11 @@ import { OptionService } from './option.service';
 import { OptionResolver } from './option.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Option } from './entities/option.entity';
-import { QuestionService } from 'src/question/question.service';
-import { Question } from 'src/question/entities/question.entity';
+import { QuestionModule } from 'src/question/question.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Option, Question])],
-  providers: [OptionResolver, OptionService, QuestionService],
+  imports: [TypeOrmModule.forFeature([Option]), QuestionModule],
+  providers: [OptionResolver, OptionService],
+  exports: [OptionService],
 })
 export class OptionModule {}

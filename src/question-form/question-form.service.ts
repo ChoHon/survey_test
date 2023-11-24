@@ -14,7 +14,10 @@ export class QuestionFormService {
     private questionService: QuestionService,
   ) {}
 
-  async findOne(form_id: number, question_id: number): Promise<QuestionInForm> {
+  async findOneByFormAndQuestion(
+    form_id: number,
+    question_id: number,
+  ): Promise<QuestionInForm> {
     const target = await this.qfRepo.findOne({
       relations: { form: true, question: true },
       where: { form: { id: form_id }, question: { id: question_id } },
@@ -23,11 +26,18 @@ export class QuestionFormService {
     return target;
   }
 
+  async findOneById(id: number): Promise<QuestionInForm> {
+    return await this.qfRepo.findOne({ where: { id } });
+  }
+
   async addQuestionToForm(
     form_id: number,
     question_id: number,
   ): Promise<QuestionInForm> {
-    const is_duplicated = await this.findOne(form_id, question_id);
+    const is_duplicated = await this.findOneByFormAndQuestion(
+      form_id,
+      question_id,
+    );
 
     if (is_duplicated) throw new NotFoundException('중복 질문');
 
@@ -46,7 +56,7 @@ export class QuestionFormService {
     form_id: number,
     question_id: number,
   ): Promise<number> {
-    const target = await this.findOne(form_id, question_id);
+    const target = await this.findOneByFormAndQuestion(form_id, question_id);
 
     const result = await this.qfRepo.delete(target.id);
 

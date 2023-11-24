@@ -3,18 +3,16 @@ import { QuestionFormService } from './question-form.service';
 import { QuestionFormResolver } from './question-form.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { QuestionInForm } from './entities/question-form.entity';
-import { FormService } from 'src/form/form.service';
-import { QuestionService } from 'src/question/question.service';
-import { Form } from 'src/form/entities/form.entity';
-import { Question } from 'src/question/entities/question.entity';
+import { FormModule } from 'src/form/form.module';
+import { QuestionModule } from 'src/question/question.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Form, Question, QuestionInForm])],
-  providers: [
-    QuestionFormResolver,
-    QuestionFormService,
-    FormService,
-    QuestionService,
+  imports: [
+    TypeOrmModule.forFeature([QuestionInForm]),
+    FormModule,
+    QuestionModule,
   ],
+  providers: [QuestionFormResolver, QuestionFormService],
+  exports: [QuestionFormService],
 })
 export class QuestionFormModule {}

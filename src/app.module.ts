@@ -9,8 +9,8 @@ import { AppService } from './app.service';
 import { FormModule } from './form/form.module';
 import { QuestionModule } from './question/question.module';
 import { OptionModule } from './option/option.module';
-import { AnswerModule } from './answer/answer.module';
 import { QuestionFormModule } from './question-form/question-form.module';
+import { ChoiceModule } from './choice/choice.module';
 
 @Module({
   imports: [
@@ -34,9 +34,9 @@ import { QuestionFormModule } from './question-form/question-form.module';
     }),
     FormModule,
     QuestionModule,
-    OptionModule,
-    AnswerModule,
     QuestionFormModule,
+    OptionModule,
+    ChoiceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
