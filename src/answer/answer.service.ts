@@ -45,14 +45,18 @@ export class AnswerService {
     return result.affected;
   }
 
+  async findOneAnswerWithOpion(id: number): Promise<Answer> {
+    return await this.answerRepo.findOne({
+      relations: { choices: { option: true } },
+      where: { id },
+    });
+  }
+
   async addChoiceToAnswer(
     answer_id: number,
     choice_id: number,
   ): Promise<Answer> {
-    const target_answer = await this.answerRepo.findOne({
-      relations: { choices: { option: true } },
-      where: { id: answer_id },
-    });
+    const target_answer = await this.findOneAnswerWithOpion(answer_id);
     const target_choice = await this.choiceService.findOne(choice_id);
 
     if (target_answer && target_choice) {
@@ -70,10 +74,7 @@ export class AnswerService {
     answer_id: number,
     choice_id: number,
   ): Promise<Answer> {
-    const target_answer = await this.answerRepo.findOne({
-      relations: { choices: true },
-      where: { id: answer_id },
-    });
+    const target_answer = await this.findOneAnswerWithOpion(answer_id);
     const target_choice = await this.choiceService.findOne(choice_id);
 
     if (target_answer && target_choice) {

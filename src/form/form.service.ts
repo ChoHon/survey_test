@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateFormInput } from './dto/create-form.input';
 import { UpdateFormInput } from './dto/update-form.input';
-import { Form } from './entities/form.entity';
+import { Form, FormStatus } from './entities/form.entity';
 
 @Injectable()
 export class FormService {
@@ -37,5 +37,14 @@ export class FormService {
   async remove(id: number): Promise<number> {
     const result = await this.formRepo.delete(id);
     return result.affected;
+  }
+
+  async finishForm(id: number): Promise<Form> {
+    const target_form = await this.findOne(id);
+
+    if (target_form) {
+      target_form.status = FormStatus.FINISHED;
+      return await this.formRepo.save(target_form);
+    }
   }
 }

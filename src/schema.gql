@@ -50,7 +50,7 @@ type Form {
 
 enum FormStatus {
   ONGOING
-  COMPLETE
+  FINISHED
 }
 
 type Answer {
@@ -79,6 +79,7 @@ type Mutation {
   createForm(input: CreateFormInput!): Form!
   updateForm(input: UpdateFormInput!): Form!
   removeForm(id: Int!): Boolean!
+  finishForm(id: Int!): Form!
   createQuestion(input: CreateQuestionInput!): Question!
   updateQuestion(input: UpdateQuestionInput!): Question!
   removeQuestion(id: Int!): Boolean!

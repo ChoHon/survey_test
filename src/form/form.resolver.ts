@@ -32,4 +32,9 @@ export class FormResolver {
   removeForm(@Args('id', { type: () => Int }) id: number) {
     return this.formService.remove(id);
   }
+
+  @Mutation(() => Form, { name: 'finishForm' })
+  finishForm(@Args('id', { type: () => Int }) id: number) {
+    return this.formService.finishForm(id);
+  }
 }

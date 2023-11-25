@@ -10,7 +10,7 @@ import { Column, Entity, OneToMany } from 'typeorm';
 
 export enum FormStatus {
   ONGOING = 0,
-  COMPLETE = 1,
+  FINISHED = 1,
 }
 
 registerEnumType(FormStatus, { name: 'FormStatus' });
