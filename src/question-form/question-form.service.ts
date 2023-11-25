@@ -46,7 +46,7 @@ export class QuestionFormService {
 
     if (is_duplicated) throw new BadRequestException('중복된 문항');
 
-    const target_form = await this.formService.findOne(form_id);
+    const target_form = await this.formService.findOneForm(form_id);
     if (!target_form) throw new NotFoundException('존재하지 않는 설문지');
     else if (target_form.status === FormStatus.FINISHED)
       throw new BadRequestException('종료된 설문지');

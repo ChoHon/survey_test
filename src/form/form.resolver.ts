@@ -21,13 +21,13 @@ export class FormResolver {
   }
 
   @Query(() => [Form], { name: 'findAllForm' })
-  findAll() {
-    return this.formService.findAll();
+  async findAllForm() {
+    return this.formService.findAllForm();
   }
 
   @Query(() => Form, { name: 'findOneForm' })
-  async findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.formService.findOne(id);
+  async findOneForm(@Args('id', { type: () => Int }) id: number) {
+    return this.formService.findOneForm(id);
   }
 
   @Mutation(() => Form, { name: 'updateForm' })
