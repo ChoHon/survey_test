@@ -13,14 +13,14 @@ export class OptionResolver {
     return this.optionService.createOption(input);
   }
 
-  @Query(() => [Option], { name: 'findAllOption' })
-  findAllOption() {
-    return this.optionService.findAllOption();
+  @Query(() => [Option], { name: 'getAllOption' })
+  getAllOption() {
+    return this.optionService.getAllOption();
   }
 
-  @Query(() => Option, { name: 'findOneOption' })
-  findOneOption(@Args('id', { type: () => Int }) id: number) {
-    return this.optionService.findOneOption(id);
+  @Query(() => Option, { name: 'getOptionById' })
+  getOptionById(@Args('id', { type: () => Int }) id: number) {
+    return this.optionService.getOptionById(id);
   }
 
   @Mutation(() => Option, { name: 'updateOption' })

@@ -13,14 +13,14 @@ export class AnswerResolver {
     return this.answerService.createAnswer(input);
   }
 
-  @Query(() => [Answer], { name: 'findAllAnswer' })
-  findAllAnswer() {
-    return this.answerService.findAllAnswer();
+  @Query(() => [Answer], { name: 'getAllAnswer' })
+  getAllAnswer() {
+    return this.answerService.getAllAnswer();
   }
 
-  @Query(() => Answer, { name: 'findOneAnswer' })
-  findOneAnswer(@Args('id', { type: () => Int }) id: number) {
-    return this.answerService.findOneAnswer(id);
+  @Query(() => Answer, { name: 'getAnswerById' })
+  getAnswerById(@Args('id', { type: () => Int }) id: number) {
+    return this.answerService.getAnswerById(id);
   }
 
   @Mutation(() => Answer, { name: 'updateAnswer' })

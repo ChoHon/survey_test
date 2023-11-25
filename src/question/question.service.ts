@@ -36,11 +36,11 @@ export class QuestionService {
     }
   }
 
-  async findAllQuestion(): Promise<Question[]> {
+  async getAllQuestion(): Promise<Question[]> {
     return this.questionRepository.find();
   }
 
-  async findOneQuestion(id: number): Promise<Question> {
+  async getQuestionById(id: number): Promise<Question> {
     return this.questionRepository.findOne({ where: { id } });
   }
 

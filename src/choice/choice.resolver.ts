@@ -12,18 +12,13 @@ export class ChoiceResolver {
     return this.choiceService.createChoice(input);
   }
 
-  @Query(() => [Choice], { name: 'findAllChoice' })
-  findAllChoice() {
-    return this.choiceService.findAllChoice();
-  }
-
-  @Query(() => Choice, { name: 'findOneChoice' })
-  findOneChoice(@Args('id', { type: () => Int }) id: number) {
-    return this.choiceService.findOneChoice(id);
+  @Query(() => Choice, { name: 'getChoiceById' })
+  getChoiceById(@Args('id', { type: () => Int }) id: number) {
+    return this.choiceService.getChoiceById(id);
   }
 
   @Mutation(() => Boolean, { name: 'removeChoice' })
-  removeAnswerChoice(@Args('id', { type: () => Int }) id: number) {
+  removeChoice(@Args('id', { type: () => Int }) id: number) {
     return this.choiceService.removeChoice(id);
   }
 }

@@ -1,73 +1,59 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# API 목록
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 설문지(Form)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+| 이름        | 설명                  | Method   |
+| ----------- | --------------------- | -------- |
+| createForm  | 설문지 생성           | Mutation |
+| updateForm  | 설문지 수정           | Mutation |
+| removeForm  | 설문지 삭제           | Mutation |
+| finishForm  | 설문지 완료           | Mutation |
+| getAllForm  | 모든 설문지 조회      | Query    |
+| getFormById | 특정 ID의 설문지 조회 | Query    |
 
-## Description
+## 문항(Question)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+| 이름            | 설명                | Method   |
+| --------------- | ------------------- | -------- |
+| createQuestion  | 문항 생성           | Mutation |
+| updateQuestion  | 문항 수정           | Mutation |
+| removeQuestion  | 문항 삭제           | Mutation |
+| getAllQuestion  | 모든 문항 조회      | Query    |
+| getQuestionById | 특정 ID의 문항 조회 | Query    |
 
-## Installation
+## 설문지 문항(Question-Form)
 
-```bash
-$ npm install
-```
+| 이름                   | 설명                 | Method   |
+| ---------------------- | -------------------- | -------- |
+| addQuestionToForm      | 설문지에 문항 추가   | Mutation |
+| removeQuestionFromForm | 설문지에서 문항 삭제 | Mutation |
 
-## Running the app
+## 선택지(Option)
 
-```bash
-# development
-$ npm run start
+| 이름          | 설명                  | Method   |
+| ------------- | --------------------- | -------- |
+| createOption  | 선택지 생성           | Mutation |
+| updateOption  | 선택지 수정           | Mutation |
+| removeOption  | 선택지 삭제           | Mutation |
+| getAllOption  | 모든 선택지 조회      | Query    |
+| getOptionById | 특정 ID의 선택지 조회 | Query    |
 
-# watch mode
-$ npm run start:dev
+## 선택(Choice)
 
-# production mode
-$ npm run start:prod
-```
+| 이름          | 설명                | Method   |
+| ------------- | ------------------- | -------- |
+| createChoice  | 문항 생성           | Mutation |
+| removeChoice  | 문항 삭제           | Mutation |
+| getChoiceById | 특정 ID의 문항 조회 | Query    |
 
-## Test
+## 답변(Answer)
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+| 이름                   | 설명                | Method   |
+| ---------------------- | ------------------- | -------- |
+| createAnswer           | 답변 생성           | Mutation |
+| updateAnswer           | 답변 수정           | Mutation |
+| removeAnswer           | 답변 삭제           | Mutation |
+| getAllAnswer           | 모든 답변 조회      | Query    |
+| getAnswerById          | 특정 ID의 답변 조회 | Query    |
+| addChoiceToAnswer      | 답변에 선택 추가    | Mutation |
+| removeChoiceFromAnswer | 답변에서 선택 삭제  | Mutation |

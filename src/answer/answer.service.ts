@@ -40,17 +40,17 @@ export class AnswerService {
     }
   }
 
-  async findAllAnswer() {
+  async getAllAnswer() {
     return this.answerRepo.find();
   }
 
-  async findOneAnswer(id: number) {
+  async getAnswerById(id: number) {
     return this.answerRepo.findOne({ where: { id } });
   }
 
   async updateAnswer(id: number, input: UpdateAnswerInput) {
     try {
-      const target_answer = await this.findOneAnswer(id);
+      const target_answer = await this.getAnswerById(id);
 
       if (!target_answer) throw new NotFoundException('존재하지 않는 답변 ID');
 
@@ -83,8 +83,8 @@ export class AnswerService {
     choice_id: number,
   ): Promise<Answer> {
     try {
-      const target_answer = await this.findOneAnswer(answer_id);
-      const target_choice = await this.choiceService.findOneChoice(choice_id);
+      const target_answer = await this.getAnswerById(answer_id);
+      const target_choice = await this.choiceService.getChoiceById(choice_id);
 
       if (!target_answer || !target_choice)
         throw new NotFoundException('존재하지 않는 답변 혹은 Choice ID');
@@ -109,8 +109,8 @@ export class AnswerService {
     choice_id: number,
   ): Promise<Answer> {
     try {
-      const target_answer = await this.findOneAnswer(answer_id);
-      const target_choice = await this.choiceService.findOneChoice(choice_id);
+      const target_answer = await this.getAnswerById(answer_id);
+      const target_choice = await this.choiceService.getChoiceById(choice_id);
 
       if (!target_answer || !target_choice)
         throw new NotFoundException('존재하지 않는 답변 혹은 Choice ID');

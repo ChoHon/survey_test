@@ -29,7 +29,7 @@ export class OptionService {
     try {
       const { question_id, ...rest } = input;
       const target_question =
-        await this.questionService.findOneQuestion(question_id);
+        await this.questionService.getQuestionById(question_id);
       if (!target_question)
         throw new NotFoundException('존재하지 않는 문항 ID');
 
@@ -46,17 +46,17 @@ export class OptionService {
     }
   }
 
-  async findAllOption(): Promise<Option[]> {
+  async getAllOption(): Promise<Option[]> {
     return this.optionRepo.find();
   }
 
-  async findOneOption(id: number): Promise<Option> {
+  async getOptionById(id: number): Promise<Option> {
     return this.optionRepo.findOne({ where: { id } });
   }
 
   async updateOption(id: number, input: UpdateOptionInput): Promise<Option> {
     try {
-      const target_option = await this.findOneOption(id);
+      const target_option = await this.getOptionById(id);
       if (!target_option)
         throw new NotFoundException('존재하지 않는 선택지 ID');
 

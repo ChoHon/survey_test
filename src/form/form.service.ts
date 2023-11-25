@@ -36,17 +36,17 @@ export class FormService {
     }
   }
 
-  async findAllForm(): Promise<Form[]> {
+  async getAllForm(): Promise<Form[]> {
     return this.formRepo.find();
   }
 
-  async findOneForm(id: number): Promise<Form> {
+  async getFormbyId(id: number): Promise<Form> {
     return this.formRepo.findOne({ where: { id } });
   }
 
   async updateForm(id: number, input: UpdateFormInput): Promise<Form> {
     try {
-      const target_form = await this.findOneForm(id);
+      const target_form = await this.getFormbyId(id);
 
       if (!target_form) throw new NotFoundException('존재하지 않는 설문지 ID');
 
@@ -77,7 +77,7 @@ export class FormService {
 
   async finishForm(id: number): Promise<Form> {
     try {
-      const target_form = await this.findOneForm(id);
+      const target_form = await this.getFormbyId(id);
 
       if (!target_form) throw new NotFoundException('존재하지 않는 설문지 ID');
 

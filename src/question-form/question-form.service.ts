@@ -27,7 +27,7 @@ export class QuestionFormService {
     private questionService: QuestionService,
   ) {}
 
-  async findOneByFormAndQuestion(
+  async getQuestionFormByFormAndQuestion(
     form_id: number,
     question_id: number,
   ): Promise<QuestionInForm> {
@@ -39,7 +39,7 @@ export class QuestionFormService {
     return target;
   }
 
-  async findOneById(id: number): Promise<QuestionInForm> {
+  async getQuestionFormById(id: number): Promise<QuestionInForm> {
     return await this.qfRepo.findOne({ where: { id } });
   }
 
@@ -48,15 +48,15 @@ export class QuestionFormService {
     question_id: number,
   ): Promise<QuestionInForm> {
     try {
-      const is_duplicated = await this.findOneByFormAndQuestion(
+      const is_duplicated = await this.getQuestionFormByFormAndQuestion(
         form_id,
         question_id,
       );
       if (is_duplicated) throw new BadRequestException('이미 추가된 문항');
 
-      const target_form = await this.formService.findOneForm(form_id);
+      const target_form = await this.formService.getFormbyId(form_id);
       const target_question =
-        await this.questionService.findOneQuestion(question_id);
+        await this.questionService.getQuestionById(question_id);
 
       if (!target_form || !target_question)
         throw new NotFoundException('존재하지 않는 설문지 혹은 문항 ID');
@@ -83,7 +83,10 @@ export class QuestionFormService {
     question_id: number,
   ): Promise<number> {
     try {
-      const target = await this.findOneByFormAndQuestion(form_id, question_id);
+      const target = await this.getQuestionFormByFormAndQuestion(
+        form_id,
+        question_id,
+      );
       if (!target) throw new NotFoundException('존재하지 않는 문항 ID');
 
       const result = await this.qfRepo.delete(target.id);

@@ -20,14 +20,14 @@ export class FormResolver {
     return this.formService.createForm(input);
   }
 
-  @Query(() => [Form], { name: 'findAllForm' })
-  async findAllForm() {
-    return this.formService.findAllForm();
+  @Query(() => [Form], { name: 'getAllForm' })
+  async getAllForm() {
+    return this.formService.getAllForm();
   }
 
-  @Query(() => Form, { name: 'findOneForm' })
-  async findOneForm(@Args('id', { type: () => Int }) id: number) {
-    return this.formService.findOneForm(id);
+  @Query(() => Form, { name: 'getForm' })
+  async getFormbyId(@Args('id', { type: () => Int }) id: number) {
+    return this.formService.getFormbyId(id);
   }
 
   @Mutation(() => Form, { name: 'updateForm' })

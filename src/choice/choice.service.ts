@@ -29,8 +29,8 @@ export class ChoiceService {
   async createChoice(input: CreateChoiceInput): Promise<Choice> {
     try {
       const { qf_id, option_id } = input;
-      const target_qf = await this.qfService.findOneById(qf_id);
-      const target_option = await this.optionService.findOneOption(option_id);
+      const target_qf = await this.qfService.getQuestionFormById(qf_id);
+      const target_option = await this.optionService.getOptionById(option_id);
       if (!target_qf || !target_option)
         throw new NotFoundException('존재하지 않는 설문지 문항 혹은 선택지 ID');
 
@@ -47,11 +47,7 @@ export class ChoiceService {
     }
   }
 
-  async findAllChoice(): Promise<Choice[]> {
-    return this.choiceRepo.find();
-  }
-
-  async findOneChoice(id: number): Promise<Choice> {
+  async getChoiceById(id: number): Promise<Choice> {
     return this.choiceRepo.findOne({ where: { id } });
   }
 
