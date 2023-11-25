@@ -6,6 +6,7 @@ import { UpdateFormInput } from './dto/update-form.input';
 import { Inject } from '@nestjs/common';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
+import { Question } from 'src/question/entities/question.entity';
 
 @Resolver(() => Form)
 export class FormResolver {
@@ -21,13 +22,18 @@ export class FormResolver {
   }
 
   @Query(() => [Form], { name: 'getAllForm' })
-  async getAllForm() {
+  getAllForm() {
     return this.formService.getAllForm();
   }
 
   @Query(() => Form, { name: 'getForm' })
-  async getFormbyId(@Args('id', { type: () => Int }) id: number) {
+  getFormbyId(@Args('id', { type: () => Int }) id: number) {
     return this.formService.getFormbyId(id);
+  }
+
+  @Query(() => [Question], { name: 'getAllQuestionFromForm' })
+  getAllQuestionFromForm(@Args('id', { type: () => Int }) id: number) {
+    return this.formService.getAllQuestionFromForm(id);
   }
 
   @Mutation(() => Form, { name: 'updateForm' })

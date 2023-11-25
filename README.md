@@ -1,15 +1,20 @@
+# ER Diagram
+
+![ERD](ERD.png)
+
 # API 목록
 
 ## 설문지(Form)
 
-| 이름        | 설명                  | Method   |
-| ----------- | --------------------- | -------- |
-| createForm  | 설문지 생성           | Mutation |
-| updateForm  | 설문지 수정           | Mutation |
-| removeForm  | 설문지 삭제           | Mutation |
-| finishForm  | 설문지 완료           | Mutation |
-| getAllForm  | 모든 설문지 조회      | Query    |
-| getFormById | 특정 ID의 설문지 조회 | Query    |
+| 이름                   | 설명                         | Method   |
+| ---------------------- | ---------------------------- | -------- |
+| createForm             | 설문지 생성                  | Mutation |
+| updateForm             | 설문지 수정                  | Mutation |
+| removeForm             | 설문지 삭제                  | Mutation |
+| finishForm             | 설문지 완료                  | Mutation |
+| getAllForm             | 모든 설문지 조회             | Query    |
+| getFormById            | 특정 ID의 설문지 조회        | Query    |
+| getAllQuestionFromForm | 특정 설문지의 모든 문항 조회 | Query    |
 
 ## 문항(Question)
 

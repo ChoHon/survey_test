@@ -63,16 +63,16 @@ type Answer {
 }
 
 type Query {
-  findAllForm: [Form!]!
-  findOneForm(id: Int!): Form!
-  findAllQuestion: [Question!]!
-  findOneQuestion(id: Int!): Question!
-  findAllOption: [Option!]!
-  findOneOption(id: Int!): Option!
-  findAllChoice: [Choice!]!
-  findOneChoice(id: Int!): Choice!
-  findAllAnswer: [Answer!]!
-  findOneAnswer(id: Int!): Answer!
+  getAllForm: [Form!]!
+  getForm(id: Int!): Form!
+  getAllQuestionFromForm(id: Int!): [Question!]!
+  getAllQuestion: [Question!]!
+  getQuestionById(id: Int!): Question!
+  getAllOption: [Option!]!
+  getOptionById(id: Int!): Option!
+  getChoiceById(id: Int!): Choice!
+  getAllAnswer: [Answer!]!
+  getAnswerById(id: Int!): Answer!
 }
 
 type Mutation {
