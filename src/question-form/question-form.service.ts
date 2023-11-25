@@ -47,65 +47,54 @@ export class QuestionFormService {
     form_id: number,
     question_id: number,
   ): Promise<QuestionInForm> {
-    const is_duplicated = await this.findOneByFormAndQuestion(
-      form_id,
-      question_id,
-    );
+    try {
+      const is_duplicated = await this.findOneByFormAndQuestion(
+        form_id,
+        question_id,
+      );
+      if (is_duplicated) throw new BadRequestException('이미 추가된 문항');
 
-    if (is_duplicated) {
-      const msg = '이미 추가된 문항';
-      this.logger.error(msg);
-      throw new BadRequestException(msg);
+      const target_form = await this.formService.findOneForm(form_id);
+      const target_question =
+        await this.questionService.findOneQuestion(question_id);
+
+      if (!target_form || !target_question)
+        throw new NotFoundException('존재하지 않는 설문지 혹은 문항 ID');
+      else if (target_form.status === FormStatus.FINISHED)
+        throw new BadRequestException('종료된 설문지 ID');
+
+      const new_qf = this.qfRepo.create({
+        form: target_form,
+        question: target_question,
+      });
+
+      const result = await this.qfRepo.save(new_qf);
+
+      this.logger.log('설문지에 문항 추가 성공', 'QuestionInForm');
+      return result;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    const target_form = await this.formService.findOneForm(form_id);
-    if (!target_form) {
-      const msg = '존재하지 않는 설문지 ID';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
-    } else if (target_form.status === FormStatus.FINISHED) {
-      const msg = '종료된 설문지 ID';
-      this.logger.error(msg);
-      throw new BadRequestException(msg);
-    }
-
-    const target_question =
-      await this.questionService.findOneQuestion(question_id);
-    if (!target_question) {
-      const msg = '존재하지 않는 문항 ID';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
-    }
-    const new_qf = this.qfRepo.create({
-      form: target_form,
-      question: target_question,
-    });
-
-    const result = await this.qfRepo.save(new_qf);
-
-    this.logger.log('설문지에 문항 추가 성공', 'QuestionInForm');
-    return result;
   }
 
   async removeQuestionFromForm(
     form_id: number,
     question_id: number,
   ): Promise<number> {
-    const target = await this.findOneByFormAndQuestion(form_id, question_id);
-    if (!target) {
-      const msg = '존재하지 않는 문항 ID';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
-    }
-    const result = await this.qfRepo.delete(target.id);
+    try {
+      const target = await this.findOneByFormAndQuestion(form_id, question_id);
+      if (!target) throw new NotFoundException('존재하지 않는 문항 ID');
 
-    if (!result.affected) {
-      const msg = '설문지에서 문항 삭제 실패';
-      this.logger.error(msg);
-      throw new InternalServerErrorException(msg);
-    }
+      const result = await this.qfRepo.delete(target.id);
+      if (!result.affected)
+        throw new InternalServerErrorException('설문지에서 문항 삭제 실패');
 
-    this.logger.log('설문지에서 문항 삭제 성공', 'QuestionInForm');
-    return result.affected;
+      this.logger.log('설문지에서 문항 삭제 성공', 'QuestionInForm');
+      return result.affected;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
+    }
   }
 }

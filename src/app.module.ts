@@ -37,7 +37,6 @@ import { winstonLogger } from './config/wiston.config';
       formatError: (error) => ({
         message: error.message,
         path: error.path,
-        code: error.extensions.originalError,
       }),
     }),
     WinstonModule.forRoot(winstonLogger),

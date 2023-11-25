@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { Repository } from 'typeorm';
@@ -18,11 +23,17 @@ export class FormService {
   ) {}
 
   async createForm(input: CreateFormInput): Promise<Form> {
-    const new_form = this.formRepo.create(input);
-    const result = await this.formRepo.save(new_form);
+    try {
+      const new_form = this.formRepo.create(input);
+      const result = await this.formRepo.save(new_form);
 
-    this.logger.log(`설문지 생성 성공`, 'Form');
-    return result;
+      this.logger.log(`설문지 생성 성공`, 'Form');
+      return result;
+    } catch (error) {
+      const msg = '설문지 생성 실패';
+      this.logger.error(msg, error.stack);
+      throw new InternalServerErrorException(msg);
+    }
   }
 
   async findAllForm(): Promise<Form[]> {
@@ -34,46 +45,50 @@ export class FormService {
   }
 
   async updateForm(id: number, input: UpdateFormInput): Promise<Form> {
-    const target_form = await this.findOneForm(id);
+    try {
+      const target_form = await this.findOneForm(id);
 
-    if (!target_form) {
-      const msg = '존재하지 않는 설문지 ID';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
+      if (!target_form) throw new NotFoundException('존재하지 않는 설문지 ID');
+
+      const result = await this.formRepo.save({ ...target_form, ...input });
+      this.logger.log('설문지 수정 성공', 'Form');
+
+      return result;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    const result = await this.formRepo.save({ ...target_form, ...input });
-    this.logger.log('설문지 수정 성공', 'Form');
-
-    return result;
   }
 
   async removeForm(id: number): Promise<number> {
-    const result = await this.formRepo.delete(id);
+    try {
+      const result = await this.formRepo.delete(id);
 
-    if (!result.affected) {
-      const msg = '설문지 삭제 실패';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
+      if (!result.affected)
+        throw new InternalServerErrorException('설문지 삭제 실패');
+
+      this.logger.log('설문지 삭제 성공', 'Form');
+      return result.affected;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    this.logger.log('설문지 삭제 성공', 'Form');
-    return result.affected;
   }
 
   async finishForm(id: number): Promise<Form> {
-    const target_form = await this.findOneForm(id);
+    try {
+      const target_form = await this.findOneForm(id);
 
-    if (!target_form) {
-      const msg = '존재하지 않는 설문지 ID';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
+      if (!target_form) throw new NotFoundException('존재하지 않는 설문지 ID');
+
+      target_form.status = FormStatus.FINISHED;
+      const result = await this.formRepo.save(target_form);
+
+      this.logger.log('설문지 완료 성공', 'Form');
+      return result;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    target_form.status = FormStatus.FINISHED;
-    const result = await this.formRepo.save(target_form);
-
-    this.logger.log('설문지 완료 성공', 'Form');
-    return result;
   }
 }

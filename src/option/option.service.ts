@@ -26,23 +26,24 @@ export class OptionService {
   ) {}
 
   async createOption(input: CreateOptionInput): Promise<Option> {
-    const { question_id, ...rest } = input;
-    const target_question =
-      await this.questionService.findOneQuestion(question_id);
+    try {
+      const { question_id, ...rest } = input;
+      const target_question =
+        await this.questionService.findOneQuestion(question_id);
+      if (!target_question)
+        throw new NotFoundException('존재하지 않는 문항 ID');
 
-    if (!target_question) {
-      const msg = '존재하지 않는 문항 ID';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
+      const new_option = this.optionRepo.create(rest);
+      new_option.question = target_question;
+
+      const result = await this.optionRepo.save(new_option);
+
+      this.logger.log('선택지 추가 성공', 'Option');
+      return result;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    const new_option = this.optionRepo.create(rest);
-    new_option.question = target_question;
-
-    const result = await this.optionRepo.save(new_option);
-
-    this.logger.log('선택지 추가 성공', 'Option');
-    return result;
   }
 
   async findAllOption(): Promise<Option[]> {
@@ -54,32 +55,36 @@ export class OptionService {
   }
 
   async updateOption(id: number, input: UpdateOptionInput): Promise<Option> {
-    const target_option = await this.findOneOption(id);
-    if (!target_option) {
-      const msg = '존재하지 않는 선택지 ID';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
+    try {
+      const target_option = await this.findOneOption(id);
+      if (!target_option)
+        throw new NotFoundException('존재하지 않는 선택지 ID');
+
+      const result = await this.optionRepo.save({
+        ...target_option,
+        ...input,
+      });
+
+      this.logger.log('선택지 수정 성공', 'Option');
+      return result;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    const result = await this.optionRepo.save({
-      ...target_option,
-      ...input,
-    });
-
-    this.logger.log('선택지 수정 성공', 'Option');
-    return result;
   }
 
   async removeOption(id: number): Promise<number> {
-    const result = await this.optionRepo.delete(id);
+    try {
+      const result = await this.optionRepo.delete(id);
 
-    if (!result.affected) {
-      const msg = '선택지 삭제 실패';
-      this.logger.error(msg);
-      throw new InternalServerErrorException(msg);
+      if (!result.affected)
+        throw new InternalServerErrorException('선택지 삭제 실패');
+
+      this.logger.log('선택지 삭제 성공', 'Option');
+      return result.affected;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    this.logger.log('선택지 삭제 성공', 'Option');
-    return result.affected;
   }
 }

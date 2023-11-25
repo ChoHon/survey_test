@@ -23,11 +23,17 @@ export class QuestionService {
   ) {}
 
   async createQuestion(input: CreateQuestionInput): Promise<Question> {
-    const new_question = this.questionRepository.create(input);
-    const result = await this.questionRepository.save(new_question);
+    try {
+      const new_question = this.questionRepository.create(input);
+      const result = await this.questionRepository.save(new_question);
 
-    this.logger.log(`문항 생성 성공`, 'Question');
-    return result;
+      this.logger.log(`문항 생성 성공`, 'Question');
+      return result;
+    } catch (error) {
+      const msg = '문항 생성 실패';
+      this.logger.error(msg, error.stack);
+      throw new InternalServerErrorException(msg);
+    }
   }
 
   async findAllQuestion(): Promise<Question[]> {
@@ -42,35 +48,39 @@ export class QuestionService {
     id: number,
     input: UpdateQuestionInput,
   ): Promise<Question> {
-    const target_question = await this.questionRepository.findOne({
-      where: { id },
-    });
+    try {
+      const target_question = await this.questionRepository.findOne({
+        where: { id },
+      });
 
-    if (!target_question) {
-      const msg = '존재하지 않는 문항 ID';
-      this.logger.error(msg);
-      throw new NotFoundException(msg);
+      if (!target_question)
+        throw new NotFoundException('존재하지 않는 문항 ID');
+
+      const result = await this.questionRepository.save({
+        ...target_question,
+        ...input,
+      });
+
+      this.logger.log(`문항 수정 성공`, 'Question');
+      return result;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    const result = await this.questionRepository.save({
-      ...target_question,
-      ...input,
-    });
-
-    this.logger.log(`문항 수정 성공`, 'Question');
-    return result;
   }
 
   async removeQuestion(id: number) {
-    const result = await this.questionRepository.delete(id);
+    try {
+      const result = await this.questionRepository.delete(id);
 
-    if (!result.affected) {
-      const msg = '문항 삭제 실패';
-      this.logger.error(msg);
-      throw new InternalServerErrorException(msg);
+      if (!result.affected)
+        throw new InternalServerErrorException('문항 삭제 실패');
+
+      this.logger.log('문항 삭제 성공', 'Question');
+      return result.affected;
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
     }
-
-    this.logger.log('문항 삭제 성공', 'Question');
-    return result.affected;
   }
 }
