@@ -32,10 +32,7 @@ export class ChoiceService {
   }
 
   async findOne(id: number): Promise<Choice> {
-    return this.choiceRepo.findOne({
-      relations: { option: true },
-      where: { id },
-    });
+    return this.choiceRepo.findOne({ where: { id } });
   }
 
   async remove(id: number): Promise<number> {

@@ -15,7 +15,7 @@ export class Answer extends Common {
   @Field(() => Int)
   total_score: number;
 
-  @ManyToMany(() => Choice)
+  @ManyToMany(() => Choice, { eager: true })
   @JoinTable()
   @Field(() => [Choice])
   choices: Choice[];

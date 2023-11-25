@@ -16,7 +16,9 @@ export class Option extends Common {
   @Field(() => Int)
   score: number;
 
-  @ManyToOne(() => Question, (question) => question.options)
+  @ManyToOne(() => Question, (question) => question.options, {
+    onDelete: 'CASCADE',
+  })
   question: Question;
 
   @OneToMany(() => Choice, (choice) => choice.option)
