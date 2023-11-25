@@ -1,5 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FormStatus } from 'src/form/entities/form.entity';
 import { FormService } from 'src/form/form.service';
 import { QuestionService } from 'src/question/question.service';
 import { Repository } from 'typeorm';
@@ -39,10 +44,15 @@ export class QuestionFormService {
       question_id,
     );
 
-    if (is_duplicated) throw new NotFoundException('중복 질문');
+    if (is_duplicated) throw new BadRequestException('중복된 문항');
 
     const target_form = await this.formService.findOne(form_id);
+    if (!target_form) throw new NotFoundException('존재하지 않는 설문지');
+    else if (target_form.status === FormStatus.FINISHED)
+      throw new BadRequestException('종료된 설문지');
+
     const target_question = await this.questionService.findOne(question_id);
+    if (!target_question) throw new NotFoundException('존재하지 않는 문항');
 
     const new_qf = this.qfRepo.create({
       form: target_form,
@@ -57,6 +67,7 @@ export class QuestionFormService {
     question_id: number,
   ): Promise<number> {
     const target = await this.findOneByFormAndQuestion(form_id, question_id);
+    if (!target) throw new NotFoundException('존재하지 않는 문항');
 
     const result = await this.qfRepo.delete(target.id);
 
