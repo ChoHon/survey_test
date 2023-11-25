@@ -18,7 +18,7 @@ export class ChoiceService {
   async create(input: CreateChoiceInput): Promise<Choice> {
     const { qf_id, option_id } = input;
     const target_qf = await this.qfService.findOneById(qf_id);
-    const target_option = await this.optionService.findOne(option_id);
+    const target_option = await this.optionService.findOneOption(option_id);
 
     const new_choice = this.choiceRepo.create();
     new_choice.qf = target_qf;

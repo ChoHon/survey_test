@@ -10,26 +10,26 @@ export class OptionResolver {
 
   @Mutation(() => Option, { name: 'createOption' })
   createOption(@Args('input') input: CreateOptionInput) {
-    return this.optionService.create(input);
+    return this.optionService.createOption(input);
   }
 
   @Query(() => [Option], { name: 'findAllOption' })
-  findAll() {
-    return this.optionService.findAll();
+  findAllOption() {
+    return this.optionService.findAllOption();
   }
 
   @Query(() => Option, { name: 'findOneOption' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.optionService.findOne(id);
+  findOneOption(@Args('id', { type: () => Int }) id: number) {
+    return this.optionService.findOneOption(id);
   }
 
   @Mutation(() => Option, { name: 'updateOption' })
   updateOption(@Args('input') input: UpdateOptionInput) {
-    return this.optionService.update(input.id, input);
+    return this.optionService.updateOption(input.id, input);
   }
 
   @Mutation(() => Boolean, { name: 'removeOption' })
   removeOption(@Args('id', { type: () => Int }) id: number) {
-    return this.optionService.remove(id);
+    return this.optionService.removeOption(id);
   }
 }
