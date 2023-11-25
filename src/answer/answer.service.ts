@@ -57,7 +57,7 @@ export class AnswerService {
     choice_id: number,
   ): Promise<Answer> {
     const target_answer = await this.findOneAnswerWithOpion(answer_id);
-    const target_choice = await this.choiceService.findOne(choice_id);
+    const target_choice = await this.choiceService.findOneChoice(choice_id);
 
     if (target_answer && target_choice) {
       target_answer.choices = target_answer.choices
@@ -75,7 +75,7 @@ export class AnswerService {
     choice_id: number,
   ): Promise<Answer> {
     const target_answer = await this.findOneAnswerWithOpion(answer_id);
-    const target_choice = await this.choiceService.findOne(choice_id);
+    const target_choice = await this.choiceService.findOneChoice(choice_id);
 
     if (target_answer && target_choice) {
       target_answer.choices = target_answer.choices.filter(

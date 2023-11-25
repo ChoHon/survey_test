@@ -8,22 +8,22 @@ export class ChoiceResolver {
   constructor(private readonly choiceService: ChoiceService) {}
 
   @Mutation(() => Choice, { name: 'createChoice' })
-  createAnswer(@Args('input') input: CreateChoiceInput) {
-    return this.choiceService.create(input);
+  createChoice(@Args('input') input: CreateChoiceInput) {
+    return this.choiceService.createChoice(input);
   }
 
   @Query(() => [Choice], { name: 'findAllChoice' })
-  findAll() {
-    return this.choiceService.findAll();
+  findAllChoice() {
+    return this.choiceService.findAllChoice();
   }
 
   @Query(() => Choice, { name: 'findOneChoice' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.choiceService.findOne(id);
+  findOneChoice(@Args('id', { type: () => Int }) id: number) {
+    return this.choiceService.findOneChoice(id);
   }
 
   @Mutation(() => Boolean, { name: 'removeChoice' })
-  removeAnswer(@Args('id', { type: () => Int }) id: number) {
-    return this.choiceService.remove(id);
+  removeAnswerChoice(@Args('id', { type: () => Int }) id: number) {
+    return this.choiceService.removeChoice(id);
   }
 }
