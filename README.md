@@ -1,4 +1,19 @@
-## 실행 방법
+## 1. 사용 스택 및 개발 환경
+
+- 사용 스택
+  - TypeScript
+  - NestJS
+  - typeORM
+  - GraphQL
+  - PostGreSQL
+  - winston
+- 개발 환경
+  - Node.JS v21.2.0
+  - npm v10.2.4
+
+<br><br><br>
+
+## 2. 실행 방법
 
 #### 1. .env 파일을 통한 환경 변수 설정
 
@@ -22,13 +37,15 @@ npm run start:dev
 localhost:4000/graphql
 ```
 
-</br>
+<br><br><br>
 
-## ER Diagram
+## 3. ER Diagram
 
 ![ERD](ERD.png)
 
-## API 목록
+<br><br><br>
+
+## 4. API 목록
 
 ### 설문지(Form)
 
@@ -52,7 +69,7 @@ localhost:4000/graphql
 | getAllQuestion  | 모든 문항 조회      | Query    |
 | getQuestionById | 특정 ID의 문항 조회 | Query    |
 
-## 설문지 문항(Question-Form)
+### 설문지 문항(Question-Form)
 
 | 이름                   | 설명                 | Method   |
 | ---------------------- | -------------------- | -------- |

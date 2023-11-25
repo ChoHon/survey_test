@@ -14,6 +14,7 @@ import { ChoiceModule } from './choice/choice.module';
 import { AnswerModule } from './answer/answer.module';
 import { WinstonModule } from 'nest-winston';
 import { winstonLogger } from './config/wiston.config';
+import { typeormConfig } from './config/typeorm.config';
 
 @Module({
   imports: [
@@ -21,16 +22,7 @@ import { winstonLogger } from './config/wiston.config';
       isGlobal: true,
       envFilePath: `.env`,
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: 5432,
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DB,
-      synchronize: true,
-      entities: [__dirname + '/**/entities/**.entity{.ts,.js}'],
-    }),
+    TypeOrmModule.forRoot(typeormConfig),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
