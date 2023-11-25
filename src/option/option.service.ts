@@ -16,7 +16,8 @@ export class OptionService {
 
   async create(input: CreateOptionInput): Promise<Option> {
     const { question_id, ...rest } = input;
-    const target_question = await this.questionService.findOne(question_id);
+    const target_question =
+      await this.questionService.findOneQuestion(question_id);
 
     if (target_question) {
       const new_option = this.optionRepo.create(rest);

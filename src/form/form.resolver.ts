@@ -17,7 +17,7 @@ export class FormResolver {
 
   @Mutation(() => Form, { name: 'createForm' })
   createForm(@Args('input') input: CreateFormInput) {
-    return this.formService.create(input);
+    return this.formService.createForm(input);
   }
 
   @Query(() => [Form], { name: 'findAllForm' })
@@ -32,12 +32,12 @@ export class FormResolver {
 
   @Mutation(() => Form, { name: 'updateForm' })
   updateForm(@Args('input') input: UpdateFormInput) {
-    return this.formService.update(input.id, input);
+    return this.formService.updateForm(input.id, input);
   }
 
   @Mutation(() => Boolean, { name: 'removeForm' })
   removeForm(@Args('id', { type: () => Int }) id: number) {
-    return this.formService.remove(id);
+    return this.formService.removeForm(id);
   }
 
   @Mutation(() => Form, { name: 'finishForm' })

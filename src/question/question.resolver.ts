@@ -10,26 +10,26 @@ export class QuestionResolver {
 
   @Mutation(() => Question, { name: 'createQuestion' })
   createQuestion(@Args('input') input: CreateQuestionInput) {
-    return this.questionService.create(input);
+    return this.questionService.createQuestion(input);
   }
 
   @Query(() => [Question], { name: 'findAllQuestion' })
-  findAll() {
-    return this.questionService.findAll();
+  findAllQuestion() {
+    return this.questionService.findAllQuestion();
   }
 
   @Query(() => Question, { name: 'findOneQuestion' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.questionService.findOne(id);
+  findOneQuestion(@Args('id', { type: () => Int }) id: number) {
+    return this.questionService.findOneQuestion(id);
   }
 
   @Mutation(() => Question, { name: 'updateQuestion' })
   updateQuestion(@Args('input') input: UpdateQuestionInput) {
-    return this.questionService.update(input.id, input);
+    return this.questionService.updateQuestion(input.id, input);
   }
 
   @Mutation(() => Boolean, { name: 'removeQuestion' })
   removeQuestion(@Args('id', { type: () => Int }) id: number) {
-    return this.questionService.remove(id);
+    return this.questionService.removeQuestion(id);
   }
 }

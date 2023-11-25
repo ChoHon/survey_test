@@ -51,7 +51,8 @@ export class QuestionFormService {
     else if (target_form.status === FormStatus.FINISHED)
       throw new BadRequestException('종료된 설문지');
 
-    const target_question = await this.questionService.findOne(question_id);
+    const target_question =
+      await this.questionService.findOneQuestion(question_id);
     if (!target_question) throw new NotFoundException('존재하지 않는 문항');
 
     const new_qf = this.qfRepo.create({

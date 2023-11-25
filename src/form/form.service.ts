@@ -17,7 +17,7 @@ export class FormService {
     private logger: Logger,
   ) {}
 
-  async create(input: CreateFormInput): Promise<Form> {
+  async createForm(input: CreateFormInput): Promise<Form> {
     const new_form = this.formRepo.create(input);
     const result = await this.formRepo.save(new_form);
 
@@ -33,7 +33,7 @@ export class FormService {
     return this.formRepo.findOne({ where: { id } });
   }
 
-  async update(id: number, input: UpdateFormInput): Promise<Form> {
+  async updateForm(id: number, input: UpdateFormInput): Promise<Form> {
     const target_form = await this.findOneForm(id);
 
     if (!target_form) {
@@ -48,7 +48,7 @@ export class FormService {
     return result;
   }
 
-  async remove(id: number): Promise<number> {
+  async removeForm(id: number): Promise<number> {
     const result = await this.formRepo.delete(id);
 
     if (!result.affected) {
