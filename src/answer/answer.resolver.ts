@@ -48,4 +48,14 @@ export class AnswerResolver {
   ) {
     return this.answerService.removeChoiceFromAnswer(answer_id, choice_id);
   }
+
+  @Mutation(() => Answer, { name: 'finishAnswer' })
+  finishAnswer(@Args('id', { type: () => Int }) id: number) {
+    return this.answerService.finishAnswer(id);
+  }
+
+  @Query(() => [Answer], { name: 'getAllFinishedAnswer' })
+  getAllFinishedAnswer() {
+    return this.answerService.getAllFinishedAnswer();
+  }
 }

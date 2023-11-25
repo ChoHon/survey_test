@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ChoiceService } from 'src/choice/choice.service';
 import { Choice } from 'src/choice/entities/choice.entity';
+import { FormStatus } from 'src/form/entities/form.entity';
 import { FormService } from 'src/form/form.service';
 import { Repository } from 'typeorm';
 import { Logger } from 'winston';
@@ -34,6 +35,8 @@ export class AnswerService {
       const target_form = await this.formService.getFormbyId(input.form_id);
 
       if (!target_form) throw new NotFoundException('존재하지 않는 설문지 ID');
+      else if (target_form.status === FormStatus.FINISHED)
+        throw new BadRequestException('종료된 설문지');
 
       const new_answer = this.answerRepo.create(input);
       new_answer.form = target_form;
@@ -100,11 +103,12 @@ export class AnswerService {
       if (target_answer.form.id !== target_choice.qf.form.id)
         throw new BadRequestException('잘못된 답변과 선택');
 
+      if (target_answer.form.status === FormStatus.FINISHED)
+        throw new BadRequestException('종료된 설문지');
+
       target_answer.choices = target_answer.choices
         ? [...target_answer.choices, target_choice]
         : [target_choice];
-
-      target_answer.total_score += target_choice.option.score;
 
       const result = await this.answerRepo.save(target_answer);
       this.logger.log('답변에 Choice 추가 성공', 'Answer');
@@ -130,8 +134,6 @@ export class AnswerService {
         (choice: Choice) => choice.id !== choice_id,
       );
 
-      target_answer.total_score -= target_choice.option.score;
-
       const result = await this.answerRepo.save(target_answer);
       this.logger.log('답변에서 Choice 삭제 성공', 'Answer');
       return result;
@@ -139,5 +141,31 @@ export class AnswerService {
       this.logger.error(error.response.message, error.stack);
       throw new InternalServerErrorException(error.response.message);
     }
+  }
+
+  async finishAnswer(id: number): Promise<Answer> {
+    try {
+      const target_answer = await this.getAnswerById(id);
+
+      if (!target_answer) throw new NotFoundException('존재하지 않는 답변 ID');
+      if (target_answer.isFinished === true)
+        throw new BadRequestException('이미 완료된 답변');
+
+      target_answer.isFinished = true;
+      target_answer.total_score = target_answer.choices.reduce(
+        (total: number, choice: Choice) => (total += choice.option.score),
+        0,
+      );
+      return await this.answerRepo.save(target_answer);
+    } catch (error) {
+      this.logger.error(error.response.message, error.stack);
+      throw new InternalServerErrorException(error.response.message);
+    }
+  }
+
+  async getAllFinishedAnswer(): Promise<Answer[]> {
+    return await this.answerRepo.find({
+      where: { isFinished: true },
+    });
   }
 }

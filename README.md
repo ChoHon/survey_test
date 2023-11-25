@@ -9,6 +9,7 @@
   - GraphQL
   - PostGreSQL
   - winston
+  - cross-env
 - 개발 환경
   - Node.JS v21.2.0
   - npm v10.2.4
@@ -112,12 +113,14 @@ localhost:4000/graphql
 
 ### 답변(Answer)
 
-| 이름                   | 설명                | Method   |
-| ---------------------- | ------------------- | -------- |
-| createAnswer           | 답변 생성           | Mutation |
-| updateAnswer           | 답변 수정           | Mutation |
-| removeAnswer           | 답변 삭제           | Mutation |
-| getAllAnswer           | 모든 답변 조회      | Query    |
-| getAnswerById          | 특정 ID의 답변 조회 | Query    |
-| addChoiceToAnswer      | 답변에 선택 추가    | Mutation |
-| removeChoiceFromAnswer | 답변에서 선택 삭제  | Mutation |
+| 이름                   | 설명                   | Method   |
+| ---------------------- | ---------------------- | -------- |
+| createAnswer           | 답변 생성              | Mutation |
+| updateAnswer           | 답변 수정              | Mutation |
+| removeAnswer           | 답변 삭제              | Mutation |
+| getAllAnswer           | 모든 답변 조회         | Query    |
+| getAnswerById          | 특정 ID의 답변 조회    | Query    |
+| getAllFinishedAnswer   | 모든 완료된 답변 조회  | Query    |
+| addChoiceToAnswer      | 답변에 선택 추가       | Mutation |
+| removeChoiceFromAnswer | 답변에서 선택 삭제     | Mutation |
+| finishAnswer           | 답변 완료 및 총점 계산 | Mutation |

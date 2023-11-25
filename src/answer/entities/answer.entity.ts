@@ -16,6 +16,10 @@ export class Answer extends Common {
   @Field(() => Int)
   total_score: number;
 
+  @Column({ default: false })
+  @Field(() => Boolean)
+  isFinished: boolean;
+
   @ManyToMany(() => Choice, { eager: true })
   @JoinTable()
   @Field(() => [Choice])
