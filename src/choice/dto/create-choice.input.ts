@@ -5,6 +5,6 @@ export class CreateChoiceInput {
   @Field(() => Int)
   qf_id: number;
 
-  @Field(() => [Int])
-  option_ids: number[];
+  @Field(() => Int)
+  option_id: number;
 }

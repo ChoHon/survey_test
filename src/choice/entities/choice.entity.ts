@@ -1,9 +1,9 @@
-import { ObjectType, InputType } from '@nestjs/graphql';
+import { ObjectType, InputType, Field } from '@nestjs/graphql';
 import { Answer } from 'src/answer/entities/answer.entity';
 import { Common } from 'src/common/entities/common.entity';
 import { Option } from 'src/option/entities/option.entity';
 import { QuestionInForm } from 'src/question-form/entities/question-form.entity';
-import { Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
+import { Entity, ManyToOne } from 'typeorm';
 
 @InputType({ isAbstract: true })
 @Entity()
@@ -15,7 +15,7 @@ export class Choice extends Common {
   @ManyToOne(() => QuestionInForm, (qf) => qf.choices)
   qf: QuestionInForm;
 
-  @ManyToMany(() => Option)
-  @JoinTable()
-  options: Option[];
+  @ManyToOne(() => Option, (option) => option.choices)
+  @Field(() => Option)
+  option: Option;
 }

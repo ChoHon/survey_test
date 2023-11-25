@@ -16,20 +16,15 @@ export class ChoiceService {
   ) {}
 
   async create(input: CreateChoiceInput): Promise<Choice> {
-    const { qf_id, option_ids } = input;
+    const { qf_id, option_id } = input;
     const target_qf = await this.qfService.findOneById(qf_id);
+    const target_option = await this.optionService.findOne(option_id);
 
-    const target_options = [];
-    for (const id of option_ids) {
-      const temp = await this.optionService.findOne(id);
-      target_options.push(temp);
-    }
+    const new_choice = this.choiceRepo.create();
+    new_choice.qf = target_qf;
+    new_choice.option = target_option;
 
-    const new_answer = this.choiceRepo.create();
-    new_answer.qf = target_qf;
-    new_answer.options = target_options;
-
-    return new_answer;
+    return await this.choiceRepo.save(new_choice);
   }
 
   async findAll(): Promise<Choice[]> {
@@ -37,7 +32,10 @@ export class ChoiceService {
   }
 
   async findOne(id: number): Promise<Choice> {
-    return this.choiceRepo.findOne({ where: { id } });
+    return this.choiceRepo.findOne({
+      relations: { option: true },
+      where: { id },
+    });
   }
 
   async remove(id: number): Promise<number> {

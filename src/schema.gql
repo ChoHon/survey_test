@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Answer {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  user: String!
+  total_score: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Question {
   id: Int!
   created_at: DateTime!
@@ -9,11 +22,6 @@ type Question {
   content: String!
   options: [Option!]!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type Option {
   id: Int!
@@ -23,11 +31,11 @@ type Option {
   score: Int!
 }
 
-type Answer {
+type Choice {
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
-  user: String!
+  option: Option!
 }
 
 type QuestionInForm {
@@ -60,9 +68,10 @@ type Query {
   findOneQuestion(id: Int!): Question!
   findAllOption: [Option!]!
   findOneOption(id: Int!): Option!
+  findAllChoice: [Choice!]!
+  findOneChoice(id: Int!): Choice!
   findAllAnswer: [Answer!]!
   findOneAnswer(id: Int!): Answer!
-  findAllAnswerByUserAndForm(user: String!, form_id: Int!): [Answer!]!
 }
 
 type Mutation {
@@ -72,14 +81,16 @@ type Mutation {
   createQuestion(input: CreateQuestionInput!): Question!
   updateQuestion(input: UpdateQuestionInput!): Question!
   removeQuestion(id: Int!): Boolean!
+  addQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
+  removeQuestionFromForm(form_id: Int!, question_id: Int!): Boolean!
   createOption(input: CreateOptionInput!): Option!
   updateOption(input: UpdateOptionInput!): Option!
   removeOption(id: Int!): Boolean!
+  createChoice(input: CreateChoiceInput!): Choice!
+  removeChoice(id: Int!): Boolean!
   createAnswer(input: CreateAnswerInput!): Answer!
   updateAnswer(input: UpdateAnswerInput!): Answer!
-  removeAnswer(id: Int!): Boolean!
-  addQuestionToForm(form_id: Int!, question_id: Int!): QuestionInForm!
-  removeQuestionFromForm(form_id: Int!, question_id: Int!): Boolean!
+  removeAnswer(id: Int!): Answer!
 }
 
 input CreateFormInput {
@@ -114,10 +125,13 @@ input UpdateOptionInput {
   id: Int!
 }
 
+input CreateChoiceInput {
+  qf_id: Int!
+  option_id: Int!
+}
+
 input CreateAnswerInput {
   user: String!
-  qf_id: Int!
-  option_ids: [Int!]!
 }
 
 input UpdateAnswerInput {
