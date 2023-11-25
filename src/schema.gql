@@ -92,7 +92,7 @@ type Mutation {
   removeChoice(id: Int!): Boolean!
   createAnswer(input: CreateAnswerInput!): Answer!
   updateAnswer(input: UpdateAnswerInput!): Answer!
-  removeAnswer(id: Int!): Answer!
+  removeAnswer(id: Int!): Boolean!
   addChoiceToAnswer(answer_id: Int!, choice_id: Int!): Answer!
   removeChoiceFromAnswer(answer_id: Int!, choice_id: Int!): Answer!
 }

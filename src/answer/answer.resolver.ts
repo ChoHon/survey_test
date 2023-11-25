@@ -10,27 +10,27 @@ export class AnswerResolver {
 
   @Mutation(() => Answer, { name: 'createAnswer' })
   createAnswer(@Args('input') input: CreateAnswerInput) {
-    return this.answerService.create(input);
+    return this.answerService.createAnswer(input);
   }
 
   @Query(() => [Answer], { name: 'findAllAnswer' })
-  findAll() {
-    return this.answerService.findAll();
+  findAllAnswer() {
+    return this.answerService.findAllAnswer();
   }
 
   @Query(() => Answer, { name: 'findOneAnswer' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.answerService.findOne(id);
+  findOneAnswer(@Args('id', { type: () => Int }) id: number) {
+    return this.answerService.findOneAnswer(id);
   }
 
   @Mutation(() => Answer, { name: 'updateAnswer' })
   updateAnswer(@Args('input') input: UpdateAnswerInput) {
-    return this.answerService.update(input.id, input);
+    return this.answerService.updateAnswer(input.id, input);
   }
 
-  @Mutation(() => Answer, { name: 'removeAnswer' })
+  @Mutation(() => Boolean, { name: 'removeAnswer' })
   removeAnswer(@Args('id', { type: () => Int }) id: number) {
-    return this.answerService.remove(id);
+    return this.answerService.removeAnswer(id);
   }
 
   @Mutation(() => Answer, { name: 'addChoiceToAnswer' })
