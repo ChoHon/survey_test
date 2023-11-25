@@ -15,23 +15,23 @@
 
 ## 2. 실행 방법
 
-#### 1. .env 파일을 통한 환경 변수 설정
-
-<br>
-
-#### 2. 서버 실행 전 필요한 node_module 다운
+#### 1. 서버 실행 전 필요한 node_module 다운
 
 ```bash
 npm i
 ```
 
-#### 3. "npm run start:dev" 명령어를 통해 서버 실행
+<br>
+
+#### 2. "npm run start:dev" 명령어를 통해 서버 실행
 
 ```bash
 npm run start:dev
 ```
 
-#### 4. 서버 접속
+<br>
+
+#### 3. 서버 접속
 
 ```bash
 localhost:4000/graphql
@@ -47,6 +47,10 @@ localhost:4000/graphql
 
 ## 4. API 목록
 
+### 엔드포인트 : localhost:4000/graphql
+
+<br>
+
 ### 설문지(Form)
 
 | 이름                   | 설명                         | Method   |
@@ -59,6 +63,8 @@ localhost:4000/graphql
 | getFormById            | 특정 ID의 설문지 조회        | Query    |
 | getAllQuestionFromForm | 특정 설문지의 모든 문항 조회 | Query    |
 
+<br>
+
 ### 문항(Question)
 
 | 이름            | 설명                | Method   |
@@ -69,12 +75,16 @@ localhost:4000/graphql
 | getAllQuestion  | 모든 문항 조회      | Query    |
 | getQuestionById | 특정 ID의 문항 조회 | Query    |
 
+<br>
+
 ### 설문지 문항(Question-Form)
 
 | 이름                   | 설명                 | Method   |
 | ---------------------- | -------------------- | -------- |
 | addQuestionToForm      | 설문지에 문항 추가   | Mutation |
 | removeQuestionFromForm | 설문지에서 문항 삭제 | Mutation |
+
+<br>
 
 ### 선택지(Option)
 
@@ -86,13 +96,17 @@ localhost:4000/graphql
 | getAllOption  | 모든 선택지 조회      | Query    |
 | getOptionById | 특정 ID의 선택지 조회 | Query    |
 
-### 선택(Choice)
+<br>
+
+### 선택한 선택지(Choice)
 
 | 이름          | 설명                | Method   |
 | ------------- | ------------------- | -------- |
 | createChoice  | 문항 생성           | Mutation |
 | removeChoice  | 문항 삭제           | Mutation |
 | getChoiceById | 특정 ID의 문항 조회 | Query    |
+
+<br>
 
 ### 답변(Answer)
 
