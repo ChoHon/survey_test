@@ -1,7 +1,7 @@
 import { ObjectType, Field, InputType, Int } from '@nestjs/graphql';
 import { Choice } from 'src/choice/entities/choice.entity';
 import { Common } from 'src/common/entities/common.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @InputType({ isAbstract: true })
 @Entity()
@@ -15,6 +15,8 @@ export class Answer extends Common {
   @Field(() => Int)
   total_score: number;
 
-  @OneToMany(() => Choice, (choice) => choice.answer)
+  @ManyToMany(() => Choice)
+  @JoinTable()
+  @Field(() => [Choice])
   choices: Choice[];
 }
