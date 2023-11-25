@@ -4,7 +4,7 @@ import {
   InputType,
   registerEnumType,
 } from '@nestjs/graphql';
-import { Common } from 'src/common/entities/common.entity';
+import { Common } from 'src/config/entities/common.entity';
 import { QuestionInForm } from 'src/question-form/entities/question-form.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 

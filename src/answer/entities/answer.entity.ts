@@ -1,6 +1,6 @@
 import { ObjectType, Field, InputType, Int } from '@nestjs/graphql';
 import { Choice } from 'src/choice/entities/choice.entity';
-import { Common } from 'src/common/entities/common.entity';
+import { Common } from 'src/config/entities/common.entity';
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @InputType({ isAbstract: true })

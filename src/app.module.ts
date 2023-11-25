@@ -12,6 +12,8 @@ import { OptionModule } from './option/option.module';
 import { QuestionFormModule } from './question-form/question-form.module';
 import { ChoiceModule } from './choice/choice.module';
 import { AnswerModule } from './answer/answer.module';
+import { WinstonModule } from 'nest-winston';
+import { winstonLogger } from './config/wiston.config';
 
 @Module({
   imports: [
@@ -32,7 +34,13 @@ import { AnswerModule } from './answer/answer.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      formatError: (error) => ({
+        message: error.message,
+        path: error.path,
+        code: error.extensions.code,
+      }),
     }),
+    WinstonModule.forRoot(winstonLogger),
     FormModule,
     QuestionModule,
     QuestionFormModule,

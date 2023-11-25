@@ -3,10 +3,17 @@ import { FormService } from './form.service';
 import { Form } from './entities/form.entity';
 import { CreateFormInput } from './dto/create-form.input';
 import { UpdateFormInput } from './dto/update-form.input';
+import { Inject } from '@nestjs/common';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 
 @Resolver(() => Form)
 export class FormResolver {
-  constructor(private readonly formService: FormService) {}
+  constructor(
+    @Inject(WINSTON_MODULE_NEST_PROVIDER)
+    private logger: Logger,
+    private readonly formService: FormService,
+  ) {}
 
   @Mutation(() => Form, { name: 'createForm' })
   createForm(@Args('input') input: CreateFormInput) {
@@ -19,7 +26,7 @@ export class FormResolver {
   }
 
   @Query(() => Form, { name: 'findOneForm' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  async findOne(@Args('id', { type: () => Int }) id: number) {
     return this.formService.findOne(id);
   }
 

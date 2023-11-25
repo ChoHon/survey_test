@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int, InputType } from '@nestjs/graphql';
 import { Choice } from 'src/choice/entities/choice.entity';
-import { Common } from 'src/common/entities/common.entity';
+import { Common } from 'src/config/entities/common.entity';
 import { Question } from 'src/question/entities/question.entity';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 
