@@ -8,11 +8,17 @@ import { Question } from '../../question/entities/question.entity';
 @Entity()
 @ObjectType()
 export class QuestionInForm extends Common {
-  @ManyToOne(() => Question, (question) => question.qf, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Question, (question) => question.qf, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
   @Field(() => Question)
   question: Question;
 
-  @ManyToOne(() => Form, (form) => form.qf, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Form, (form) => form.qf, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
   @Field(() => Form)
   form: Form;
 

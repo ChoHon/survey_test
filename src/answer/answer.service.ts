@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -8,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { ChoiceService } from 'src/choice/choice.service';
 import { Choice } from 'src/choice/entities/choice.entity';
+import { FormService } from 'src/form/form.service';
 import { Repository } from 'typeorm';
 import { Logger } from 'winston';
 import { CreateAnswerInput } from './dto/create-answer.input';
@@ -24,11 +26,17 @@ export class AnswerService {
     private logger: Logger,
 
     private choiceService: ChoiceService,
+    private formService: FormService,
   ) {}
 
   async createAnswer(input: CreateAnswerInput) {
     try {
+      const target_form = await this.formService.getFormbyId(input.form_id);
+
+      if (!target_form) throw new NotFoundException('존재하지 않는 설문지 ID');
+
       const new_answer = this.answerRepo.create(input);
+      new_answer.form = target_form;
       const result = await this.answerRepo.save(new_answer);
 
       this.logger.log('답변 생성 성공', 'Answer');
@@ -88,6 +96,9 @@ export class AnswerService {
 
       if (!target_answer || !target_choice)
         throw new NotFoundException('존재하지 않는 답변 혹은 Choice ID');
+
+      if (target_answer.form.id !== target_choice.qf.form.id)
+        throw new BadRequestException('잘못된 답변과 선택');
 
       target_answer.choices = target_answer.choices
         ? [...target_answer.choices, target_choice]

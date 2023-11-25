@@ -4,6 +4,7 @@ import {
   InputType,
   registerEnumType,
 } from '@nestjs/graphql';
+import { Answer } from 'src/answer/entities/answer.entity';
 import { Common } from 'src/config/entities/common.entity';
 import { QuestionInForm } from 'src/question-form/entities/question-form.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
@@ -34,4 +35,7 @@ export class Form extends Common {
   @OneToMany(() => QuestionInForm, (qf) => qf.form)
   @Field(() => [QuestionInForm])
   qf: QuestionInForm[];
+
+  @OneToMany(() => Answer, (answer) => answer.form)
+  answers: Answer[];
 }

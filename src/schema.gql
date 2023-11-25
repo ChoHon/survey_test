@@ -2,6 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type QuestionInForm {
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+  question: Question!
+  form: Form!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Question {
   id: Int!
   created_at: DateTime!
@@ -9,11 +22,6 @@ type Question {
   content: String!
   options: [Option!]!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type Option {
   id: Int!
@@ -27,14 +35,17 @@ type Choice {
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
+  qf: QuestionInForm!
   option: Option!
 }
 
-type QuestionInForm {
+type Answer {
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
-  question: Question!
+  user: String!
+  total_score: Int!
+  choices: [Choice!]!
   form: Form!
 }
 
@@ -51,15 +62,6 @@ type Form {
 enum FormStatus {
   ONGOING
   FINISHED
-}
-
-type Answer {
-  id: Int!
-  created_at: DateTime!
-  updated_at: DateTime!
-  user: String!
-  total_score: Int!
-  choices: [Choice!]!
 }
 
 type Query {
@@ -136,6 +138,7 @@ input CreateChoiceInput {
 
 input CreateAnswerInput {
   user: String!
+  form_id: Int!
 }
 
 input UpdateAnswerInput {

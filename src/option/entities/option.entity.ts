@@ -18,6 +18,7 @@ export class Option extends Common {
 
   @ManyToOne(() => Question, (question) => question.options, {
     onDelete: 'CASCADE',
+    eager: true,
   })
   question: Question;
 

@@ -8,7 +8,11 @@ import { Entity, ManyToOne } from 'typeorm';
 @Entity()
 @ObjectType()
 export class Choice extends Common {
-  @ManyToOne(() => QuestionInForm, (qf) => qf.choices, { onDelete: 'CASCADE' })
+  @ManyToOne(() => QuestionInForm, (qf) => qf.choices, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
+  @Field(() => QuestionInForm)
   qf: QuestionInForm;
 
   @ManyToOne(() => Option, (option) => option.choices, {

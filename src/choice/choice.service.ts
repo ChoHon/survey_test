@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
   InternalServerErrorException,
@@ -33,6 +34,9 @@ export class ChoiceService {
       const target_option = await this.optionService.getOptionById(option_id);
       if (!target_qf || !target_option)
         throw new NotFoundException('존재하지 않는 설문지 문항 혹은 선택지 ID');
+
+      if (target_option.question.id !== target_qf.question.id)
+        throw new BadRequestException('잘못된 문항과 선택지');
 
       const new_choice = this.choiceRepo.create();
       new_choice.qf = target_qf;
