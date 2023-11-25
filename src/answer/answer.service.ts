@@ -148,10 +148,10 @@ export class AnswerService {
       const target_answer = await this.getAnswerById(id);
 
       if (!target_answer) throw new NotFoundException('존재하지 않는 답변 ID');
-      if (target_answer.isFinished === true)
+      if (target_answer.is_finished === true)
         throw new BadRequestException('이미 완료된 답변');
 
-      target_answer.isFinished = true;
+      target_answer.is_finished = true;
       target_answer.total_score = target_answer.choices.reduce(
         (total: number, choice: Choice) => (total += choice.option.score),
         0,
@@ -165,7 +165,7 @@ export class AnswerService {
 
   async getAllFinishedAnswer(): Promise<Answer[]> {
     return await this.answerRepo.find({
-      where: { isFinished: true },
+      where: { is_finished: true },
     });
   }
 }

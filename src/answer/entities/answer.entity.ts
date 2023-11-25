@@ -18,7 +18,7 @@ export class Answer extends Common {
 
   @Column({ default: false })
   @Field(() => Boolean)
-  isFinished: boolean;
+  is_finished: boolean;
 
   @ManyToMany(() => Choice, { eager: true })
   @JoinTable()
