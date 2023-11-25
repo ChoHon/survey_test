@@ -1,10 +1,36 @@
-# ER Diagram
+## 실행 방법
+
+#### 1. .env 파일을 통한 환경 변수 설정
+
+<br>
+
+#### 2. 서버 실행 전 필요한 node_module 다운
+
+```bash
+npm i
+```
+
+#### 3. "npm run start:dev" 명령어를 통해 서버 실행
+
+```bash
+npm run start:dev
+```
+
+#### 4. 서버 접속
+
+```bash
+localhost:4000/graphql
+```
+
+</br>
+
+## ER Diagram
 
 ![ERD](ERD.png)
 
-# API 목록
+## API 목록
 
-## 설문지(Form)
+### 설문지(Form)
 
 | 이름                   | 설명                         | Method   |
 | ---------------------- | ---------------------------- | -------- |
@@ -16,7 +42,7 @@
 | getFormById            | 특정 ID의 설문지 조회        | Query    |
 | getAllQuestionFromForm | 특정 설문지의 모든 문항 조회 | Query    |
 
-## 문항(Question)
+### 문항(Question)
 
 | 이름            | 설명                | Method   |
 | --------------- | ------------------- | -------- |
@@ -33,7 +59,7 @@
 | addQuestionToForm      | 설문지에 문항 추가   | Mutation |
 | removeQuestionFromForm | 설문지에서 문항 삭제 | Mutation |
 
-## 선택지(Option)
+### 선택지(Option)
 
 | 이름          | 설명                  | Method   |
 | ------------- | --------------------- | -------- |
@@ -43,7 +69,7 @@
 | getAllOption  | 모든 선택지 조회      | Query    |
 | getOptionById | 특정 ID의 선택지 조회 | Query    |
 
-## 선택(Choice)
+### 선택(Choice)
 
 | 이름          | 설명                | Method   |
 | ------------- | ------------------- | -------- |
@@ -51,7 +77,7 @@
 | removeChoice  | 문항 삭제           | Mutation |
 | getChoiceById | 특정 ID의 문항 조회 | Query    |
 
-## 답변(Answer)
+### 답변(Answer)
 
 | 이름                   | 설명                | Method   |
 | ---------------------- | ------------------- | -------- |

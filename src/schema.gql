@@ -73,6 +73,7 @@ type Query {
   getChoiceById(id: Int!): Choice!
   getAllAnswer: [Answer!]!
   getAnswerById(id: Int!): Answer!
+  getTotalScoreById(id: Int!): Int!
 }
 
 type Mutation {
